@@ -1,0 +1,1722 @@
+alertmanager:
+- comment: "Root of URL to generate if config is internal://monitor"
+  argument: alertmanager.configs.auto-slack-root
+- comment: "Root of URL to generate if config is http://internal.monitor"
+  argument: alertmanager.configs.auto-webhook-root
+- comment: "Timeout for requests to Weave Cloud configs service. (default 5s)"
+  argument: alertmanager.configs.client-timeout
+- comment: "Filename of fallback config to use if none specified for instance."
+  argument: alertmanager.configs.fallback
+- comment: "How frequently to poll Cortex configs (default 15s)"
+  argument: alertmanager.configs.poll-interval
+- comment: "URL of configs API server."
+  argument: alertmanager.configs.url
+- comment: "MAC address, i.e. Mesh peer ID (default \"02:42:ac:11:00:07\")"
+  argument: alertmanager.mesh.hardware-address
+- comment: "Mesh listen address (default \"0.0.0.0:6783\")"
+  argument: alertmanager.mesh.listen-address
+- comment: "Mesh peer nickname (default \"a8b1123f5e8f\")"
+  argument: alertmanager.mesh.nickname
+- comment: "Password to join the Mesh peer network (empty password disables encryption)"
+  argument: alertmanager.mesh.password
+- comment: "Hostname for mesh peers."
+  argument: alertmanager.mesh.peer.host
+- comment: "Period with which to poll DNS for mesh peers. (default 1m0s)"
+  argument: alertmanager.mesh.peer.refresh-interval
+- comment: "SRV service used to discover peers. (default \"mesh\")"
+  argument: alertmanager.mesh.peer.service
+- comment: "Base path for data storage. (default \"data/\")"
+  argument: alertmanager.storage.path
+- comment: "How long to keep data for. (default 120h0m0s)"
+  argument: alertmanager.storage.retention
+- comment: "The URL under which Alertmanager is externally reachable (for example, if Alertmanager is served via a reverse proxy). Used for generating relative and absolute links back to Alertmanager itself. If the URL has a path portion, it will be used to prefix all HTTP endpoints served by Alertmanager. If omitted, relevant URL components will be derived automatically."
+  argument: alertmanager.web.external-url
+- comment: "if non-empty, httptest.NewServer serves on this address and blocks"
+  argument: httptest.serve
+- comment: "Only log messages with the given severity or above. Valid levels: [debug, info, warn, error] (default info)"
+  argument: log.level
+- comment: "Timeout for graceful shutdowns (default 30s)"
+  argument: server.graceful-shutdown-timeout
+- comment: "gRPC server listen port. (default 9095)"
+  argument: server.grpc-listen-port
+- comment: "Idle timeout for HTTP server (default 2m0s)"
+  argument: server.http-idle-timeout
+- comment: "HTTP server listen port. (default 80)"
+  argument: server.http-listen-port
+- comment: "Read timeout for HTTP server (default 30s)"
+  argument: server.http-read-timeout
+- comment: "Write timeout for HTTP server (default 30s)"
+  argument: server.http-write-timeout
+- comment: "Register the intrumentation handlers (/metrics etc). (default true)"
+  argument: server.register-instrumentation
+configs:
+- comment: "Path where the database migration files can be found"
+  argument: database.migrations
+- comment: "File containing password (username goes in URI)"
+  argument: database.password-file
+- comment: "URI where the database can be found (for dev you can use memory://) (default \"postgres://postgres@configs-db.weave.local/configs?sslmode=disable\")"
+  argument: database.uri
+- comment: "if non-empty, httptest.NewServer serves on this address and blocks"
+  argument: httptest.serve
+- comment: "Only log messages with the given severity or above. Valid levels: [debug, info, warn, error] (default info)"
+  argument: log.level
+- comment: "Timeout for graceful shutdowns (default 30s)"
+  argument: server.graceful-shutdown-timeout
+- comment: "gRPC server listen port. (default 9095)"
+  argument: server.grpc-listen-port
+- comment: "Idle timeout for HTTP server (default 2m0s)"
+  argument: server.http-idle-timeout
+- comment: "HTTP server listen port. (default 80)"
+  argument: server.http-listen-port
+- comment: "Read timeout for HTTP server (default 30s)"
+  argument: server.http-read-timeout
+- comment: "Write timeout for HTTP server (default 30s)"
+  argument: server.http-write-timeout
+- comment: "Register the intrumentation handlers (/metrics etc). (default true)"
+  argument: server.register-instrumentation
+distributor:
+- comment: "points to the billing ingester sidecar (should be on localhost) (default \"localhost:24225\")"
+  argument: billing.ingester
+- comment: "Maximum number of billing events to buffer in memory (default 1024)"
+  argument: billing.max-buffered-events
+- comment: "How often to retry sending events to the billing ingester. (default 500ms)"
+  argument: billing.retry-delay
+- comment: "ACL Token used to interact with Consul."
+  argument: consul.acltoken
+- comment: "HTTP timeout when talking to consul (default 20s)"
+  argument: consul.client-timeout
+- comment: "Enable consistent reads to consul. (default true)"
+  argument: consul.consistent-reads
+- comment: "Hostname and port of Consul. (default \"localhost:8500\")"
+  argument: consul.hostname
+- comment: "Prefix for keys in Consul. (default \"collectors/\")"
+  argument: consul.prefix
+- comment: "How frequently to clean up clients for ingesters that have gone away. (default 15s)"
+  argument: distributor.client-cleanup-period
+- comment: "Report number of ingested samples to billing system."
+  argument: distributor.enable-billing
+- comment: "Time to wait before sending more than the minimum successful query requests."
+  argument: distributor.extra-query-delay
+- comment: "Run a health check on each ingester client during periodic cleanup."
+  argument: distributor.health-check-ingesters
+- comment: "Per-user allowed ingestion burst size (in number of samples). Warning, very high limits will be reset every -distributor.limiter-reload-period. (default 50000)"
+  argument: distributor.ingestion-burst-size
+- comment: "Per-user ingestion rate limit in samples per second. (default 25000)"
+  argument: distributor.ingestion-rate-limit
+- comment: "Period at which to reload user ingestion limits. (default 5m0s)"
+  argument: distributor.limiter-reload-period
+- comment: "Timeout for downstream ingesters. (default 2s)"
+  argument: distributor.remote-timeout
+- comment: "The number of ingesters to write to and read from. (default 3)"
+  argument: distributor.replication-factor
+- comment: "Distribute samples based on all labels, as opposed to solely by user and metric name."
+  argument: distributor.shard-by-all-labels
+- comment: "if non-empty, httptest.NewServer serves on this address and blocks"
+  argument: httptest.serve
+- comment: "Expected number of labels per timeseries, used for preallocations. (default 20)"
+  argument: ingester-client.expected-labels
+- comment: "Expected number of samples per timeseries, used for preallocations. (default 10)"
+  argument: ingester-client.expected-samples-per-series
+- comment: "Expected number of timeseries per request, use for preallocations. (default 100)"
+  argument: ingester-client.expected-timeseries
+- comment: "gRPC client max receive message size (bytes). (default 104857600)"
+  argument: ingester.client.grpc-max-recv-msg-size
+- comment: "gRPC client max send message size (bytes). (default 16777216)"
+  argument: ingester.client.grpc-max-send-msg-size
+- comment: "Use compression when sending messages."
+  argument: ingester.client.grpc-use-gzip-compression
+- comment: "The maximum number of samples that a query can return. (default 1000000)"
+  argument: ingester.max-samples-per-query
+- comment: "Maximum number of active series per metric name. (default 50000)"
+  argument: ingester.max-series-per-metric
+- comment: "The maximum number of series that a query can return. (default 100000)"
+  argument: ingester.max-series-per-query
+- comment: "Maximum number of active series per user. (default 5000000)"
+  argument: ingester.max-series-per-user
+- comment: "File name of per-user overrides."
+  argument: limits.per-user-override-config
+- comment: "Period with this to reload the overrides. (default 10s)"
+  argument: limits.per-user-override-period
+- comment: "Only log messages with the given severity or above. Valid levels: [debug, info, warn, error] (default info)"
+  argument: log.level
+- comment: "The heartbeat timeout after which ingesters are skipped for reads/writes. (default 1m0s)"
+  argument: ring.heartbeat-timeout
+- comment: "Backend storage to use for the ring (consul, inmemory). (default \"consul\")"
+  argument: ring.store
+- comment: "Timeout for graceful shutdowns (default 30s)"
+  argument: server.graceful-shutdown-timeout
+- comment: "gRPC server listen port. (default 9095)"
+  argument: server.grpc-listen-port
+- comment: "Idle timeout for HTTP server (default 2m0s)"
+  argument: server.http-idle-timeout
+- comment: "HTTP server listen port. (default 80)"
+  argument: server.http-listen-port
+- comment: "Read timeout for HTTP server (default 30s)"
+  argument: server.http-read-timeout
+- comment: "Write timeout for HTTP server (default 30s)"
+  argument: server.http-write-timeout
+- comment: "Register the intrumentation handlers (/metrics etc). (default true)"
+  argument: server.register-instrumentation
+- comment: "Limit to length of chunk store queries, 0 to disable."
+  argument: store.max-query-length
+- comment: "Maximum number of chunks that can be fetched in a single query. (default 2000000)"
+  argument: store.query-chunk-limit
+- comment: "Duration which table will be created/deleted before/after it's needed; we won't accept sample from before this time. (default 10m0s)"
+  argument: validation.create-grace-period
+- comment: "Maximum number of label names per series. (default 30)"
+  argument: validation.max-label-names-per-series
+- comment: "Maximum length accepted for label names (default 1024)"
+  argument: validation.max-length-label-name
+- comment: "Maximum length accepted for label value. This setting also applies to the metric name (default 2048)"
+  argument: validation.max-length-label-value
+- comment: "Reject old samples."
+  argument: validation.reject-old-samples
+  self: true
+- comment: "Maximum accepted sample age before rejecting. (default 336h0m0s)"
+  argument: validation.reject-old-samples.max-age
+ingester:
+- comment: "ApplicationAutoscaling endpoint URL with escaped Key and Secret encoded."
+  argument: applicationautoscaling.url
+- comment: "The date (in the format YYYY-MM-DD) after which we use bigtable column keys."
+  argument: bigtable.column-key-from
+- comment: "gRPC client max receive message size (bytes). (default 104857600)"
+  argument: bigtable.grpc-max-recv-msg-size
+- comment: "gRPC client max send message size (bytes). (default 16777216)"
+  argument: bigtable.grpc-max-send-msg-size
+- comment: "Use compression when sending messages."
+  argument: bigtable.grpc-use-gzip-compression
+- comment: "Bigtable instance ID."
+  argument: bigtable.instance
+- comment: "Bigtable project ID."
+  argument: bigtable.project
+- comment: "Location of BoltDB index files."
+  argument: boltdb.dir
+- comment: "Cache config for chunks. Enable on-disk cache."
+  argument: cache.enable-diskcache
+- comment: "Cache config for chunks. Enable in-memory cache."
+  argument: cache.enable-fifocache
+- comment: "Comma-separated hostnames or ips of Cassandra instances."
+  argument: cassandra.addresses
+- comment: "Enable password authentication when connecting to cassandra."
+  argument: cassandra.auth
+- comment: "Path to certificate file to verify the peer."
+  argument: cassandra.ca-path
+- comment: "Consistency level for Cassandra. (default \"QUORUM\")"
+  argument: cassandra.consistency
+- comment: "Instruct the cassandra driver to not attempt to get host info from the system.peers table."
+  argument: cassandra.disable-initial-host-lookup
+- comment: "Require SSL certificate validation. (default true)"
+  argument: cassandra.host-verification
+- comment: "Keyspace to use in Cassandra."
+  argument: cassandra.keyspace
+- comment: "Password to use when connecting to cassandra."
+  argument: cassandra.password
+- comment: "Port that Cassandra is running on (default 9042)"
+  argument: cassandra.port
+- comment: "Replication factor to use in Cassandra. (default 1)"
+  argument: cassandra.replication-factor
+- comment: "Use SSL when connecting to cassandra instances."
+  argument: cassandra.ssl
+- comment: "Timeout when connecting to cassandra. (default 600ms)"
+  argument: cassandra.timeout
+- comment: "Username to use when connecting to cassandra."
+  argument: cassandra.username
+- comment: "Which storage client to use (aws, gcp, cassandra, inmemory). (default \"aws\")"
+  argument: chunk.storage-client
+- comment: "Schema config yaml"
+  argument: config-yaml
+- comment: "ACL Token used to interact with Consul."
+  argument: consul.acltoken
+- comment: "HTTP timeout when talking to consul (default 20s)"
+  argument: consul.client-timeout
+- comment: "Enable consistent reads to consul. (default true)"
+  argument: consul.consistent-reads
+- comment: "Hostname and port of Consul. (default \"localhost:8500\")"
+  argument: consul.hostname
+- comment: "Prefix for keys in Consul. (default \"collectors/\")"
+  argument: consul.prefix
+- comment: "Cache config for chunks. The default validity of entries for caches unless overridden."
+  argument: default-validity
+- comment: "Cache config for chunks. Path to file used to cache chunks. (default \"/var/run/chunks\")"
+  argument: diskcache.path
+- comment: "Cache config for chunks. Size of file (bytes) (default 1073741824)"
+  argument: diskcache.size
+- comment: "Per-user allowed ingestion burst size (in number of samples). Warning, very high limits will be reset every -distributor.limiter-reload-period. (default 50000)"
+  argument: distributor.ingestion-burst-size
+- comment: "Per-user ingestion rate limit in samples per second. (default 25000)"
+  argument: distributor.ingestion-rate-limit
+- comment: "The number of ingesters to write to and read from. (default 3)"
+  argument: distributor.replication-factor
+- comment: "DynamoDB table management requests per second limit. (default 2)"
+  argument: dynamodb.api-limit
+- comment: "The date (in the format YYYY-MM-DD) after which we will stop querying to non-base64 encoded values."
+  argument: dynamodb.base64-buckets-from
+- comment: "Date after which to write chunks to DynamoDB."
+  argument: dynamodb.chunk-table.from
+- comment: "DynamoDB table period. (default 168h0m0s)"
+  argument: dynamodb.chunk-table.period
+- comment: "DynamoDB table prefix for period tables. (default \"cortex_chunks_\")"
+  argument: dynamodb.chunk-table.prefix
+- comment: "Tag (of the form key=value) to be added to all tables under management."
+  argument: dynamodb.chunk-table.tag
+- comment: "Number of chunks to group together to parallelise fetches (zero to disable) (default 10)"
+  argument: dynamodb.chunk.gang.size
+- comment: "Max number of chunk-get operations to start in parallel (default 32)"
+  argument: dynamodb.chunk.get.max.parallelism
+- comment: "The date (in the format YYYY-MM-DD) of the first day for which DynamoDB index buckets should be day-sized vs. hour-sized."
+  argument: dynamodb.daily-buckets-from
+- comment: "Maximum backoff time (default 50s)"
+  argument: dynamodb.max-backoff
+- comment: "Maximum number of times to retry an operation (default 20)"
+  argument: dynamodb.max-retries
+- comment: "Minimum backoff time (default 100ms)"
+  argument: dynamodb.min-backoff
+- comment: "The name of the DynamoDB table used before versioned schemas were introduced. (default \"cortex\")"
+  argument: dynamodb.original-table-name
+- comment: "Date after which to use periodic tables."
+  argument: dynamodb.periodic-table.from
+- comment: "DynamoDB table period. (default 168h0m0s)"
+  argument: dynamodb.periodic-table.period
+- comment: "DynamoDB table prefix for period tables. (default \"cortex_\")"
+  argument: dynamodb.periodic-table.prefix
+- comment: "Tag (of the form key=value) to be added to all tables under management."
+  argument: dynamodb.periodic-table.tag
+- comment: "DynamoDB endpoint URL with escaped Key and Secret encoded. If only region is specified as a host, proper endpoint will be deduced. Use inmemory:///<table-name> to use a mock in-memory implementation."
+  argument: dynamodb.url
+- comment: "Should we use periodic tables."
+  argument: dynamodb.use-periodic-tables
+- comment: "The date (in the format YYYY-MM-DD) after which we enable v4 schema."
+  argument: dynamodb.v4-schema-from
+- comment: "The date (in the format YYYY-MM-DD) after which we enable v5 schema."
+  argument: dynamodb.v5-schema-from
+- comment: "The date (in the format YYYY-MM-DD) after which we enable v6 schema."
+  argument: dynamodb.v6-schema-from
+- comment: "The date (in the format YYYY-MM-DD) after which we enable v9 schema (Series indexing)."
+  argument: dynamodb.v9-schema-from
+- comment: "How often to sample observability events (0 = never)."
+  argument: event.sample-rate
+- comment: "Cache config for chunks. The expiry duration for the cache."
+  argument: fifocache.duration
+- comment: "Cache config for chunks. The number of entries to cache."
+  argument: fifocache.size
+- comment: "Name of GCS bucket to put chunks in."
+  argument: gcs.bucketname
+- comment: "if non-empty, httptest.NewServer serves on this address and blocks"
+  argument: httptest.serve
+- comment: "Expected number of labels per timeseries, used for preallocations. (default 20)"
+  argument: ingester-client.expected-labels
+- comment: "Expected number of samples per timeseries, used for preallocations. (default 10)"
+  argument: ingester-client.expected-samples-per-series
+- comment: "Expected number of timeseries per request, use for preallocations. (default 100)"
+  argument: ingester-client.expected-timeseries
+- comment: "ID to register into consul. (default \"097bbb98e94d\")"
+  argument: ingester.ID
+- comment: "IP address to advertise in consul."
+  argument: ingester.addr
+- comment: "Range of time to subtract from MaxChunkAge to spread out flushes (default 20m0s)"
+  argument: ingester.chunk-age-jitter
+- comment: "Encoding version to use for chunks. (default 1)"
+  argument: ingester.chunk-encoding
+- comment: "Send chunks to PENDING ingesters on exit."
+  argument: ingester.claim-on-rollout
+- comment: "gRPC client max receive message size (bytes). (default 104857600)"
+  argument: ingester.client.grpc-max-recv-msg-size
+- comment: "gRPC client max send message size (bytes). (default 16777216)"
+  argument: ingester.client.grpc-max-send-msg-size
+- comment: "Use compression when sending messages."
+  argument: ingester.client.grpc-use-gzip-compression
+- comment: "Number of concurrent goroutines flushing to dynamodb. (default 50)"
+  argument: ingester.concurrent-flushes
+- comment: "Timeout for individual flush operations. (default 1m0s)"
+  argument: ingester.flush-op-timeout
+- comment: "Period with which to attempt to flush chunks. (default 1m0s)"
+  argument: ingester.flush-period
+- comment: "Period at which to heartbeat to consul. (default 5s)"
+  argument: ingester.heartbeat-period
+- comment: "Name of network interface to read address from. (default [eth0 en0])"
+  argument: ingester.interface
+- comment: "Period to wait for a claim from another ingester; will join automatically after this."
+  argument: ingester.join-after
+- comment: "Maximum chunk age before flushing. (default 12h0m0s)"
+  argument: ingester.max-chunk-age
+- comment: "Maximum chunk idle time before flushing. (default 5m0s)"
+  argument: ingester.max-chunk-idle
+- comment: "Limit on the number of concurrent streams for gRPC calls (0 = unlimited) (default 1000)"
+  argument: ingester.max-concurrent-streams
+- comment: "The maximum number of samples that a query can return. (default 1000000)"
+  argument: ingester.max-samples-per-query
+- comment: "Maximum number of active series per metric name. (default 50000)"
+  argument: ingester.max-series-per-metric
+- comment: "The maximum number of series that a query can return. (default 100000)"
+  argument: ingester.max-series-per-query
+- comment: "Maximum number of active series per user. (default 5000000)"
+  argument: ingester.max-series-per-user
+- comment: "Minimum duration to wait before becoming ready. This is to work around race conditions with ingesters exiting and updating the ring. (default 1m0s)"
+  argument: ingester.min-ready-duration
+- comment: "Store tokens in a normalised fashion to reduce allocations."
+  argument: ingester.normalise-tokens
+- comment: "Number of tokens for each ingester. (default 128)"
+  argument: ingester.num-tokens
+- comment: "port to advertise in consul (defaults to server.grpc-listen-port)."
+  argument: ingester.port
+- comment: "Period with which to update the per-user ingestion rates. (default 15s)"
+  argument: ingester.rate-update-period
+- comment: "Period chunks will remain in memory after flushing. (default 5m0s)"
+  argument: ingester.retain-period
+- comment: "Time to spend searching for a pending ingester when shutting down. (default 30s)"
+  argument: ingester.search-pending-for
+- comment: "File name of per-user overrides."
+  argument: limits.per-user-override-config
+- comment: "Period with this to reload the overrides. (default 10s)"
+  argument: limits.per-user-override-period
+- comment: "Directory to store chunks in."
+  argument: local.chunk-directory
+- comment: "Only log messages with the given severity or above. Valid levels: [debug, info, warn, error] (default info)"
+  argument: log.level
+- comment: "Cache config for chunks. How many chunks to buffer for background write back. (default 10000)"
+  argument: memcache.write-back-buffer
+- comment: "Cache config for chunks. How many goroutines to use to write back to memcache. (default 10)"
+  argument: memcache.write-back-goroutines
+- comment: "Cache config for chunks. How many keys to fetch in each batch."
+  argument: memcached.batchsize
+- comment: "Cache config for chunks. How long keys stay in the memcache."
+  argument: memcached.expiration
+- comment: "Cache config for chunks. Hostname for memcached service to use when caching chunks. If empty, no memcached will be used."
+  argument: memcached.hostname
+- comment: "Cache config for chunks. Maximum number of idle connections in pool. (default 16)"
+  argument: memcached.max-idle-conns
+- comment: "Cache config for chunks. Maximum active requests to memcache. (default 100)"
+  argument: memcached.parallelism
+- comment: "Cache config for chunks. SRV service used to discover memcache servers. (default \"memcached\")"
+  argument: memcached.service
+- comment: "Cache config for chunks. Maximum time to wait before giving up on memcached requests. (default 100ms)"
+  argument: memcached.timeout
+- comment: "Cache config for chunks. Period with which to poll DNS for memcache servers. (default 1m0s)"
+  argument: memcached.update-interval
+- comment: "query to fetch error rates per table (default \"sum(rate(cortex_dynamo_failures_total{error=\"ProvisionedThroughputExceededException\",operation=~\".*Write.*\"}[1m])) by (table) > 0\")"
+  argument: metrics.error-rate-query
+- comment: "query to fetch ingester queue length (default \"sum(avg_over_time(cortex_ingester_flush_queue_length{job=\"cortex/ingester\"}[2m]))\")"
+  argument: metrics.queue-length-query
+- comment: "query to fetch read errors per table (default \"sum(increase(cortex_dynamo_failures_total{operation=\"DynamoDB.QueryPages\",error=\"ProvisionedThroughputExceededException\"}[1m])) by (table) > 0\")"
+  argument: metrics.read-error-query
+- comment: "query to fetch read capacity usage per table (default \"sum(rate(cortex_dynamo_consumed_capacity_total{operation=\"DynamoDB.QueryPages\"}[1h])) by (table) > 0\")"
+  argument: metrics.read-usage-query
+- comment: "Scale up capacity by this multiple (default 1.3)"
+  argument: metrics.scale-up-factor
+- comment: "Queue length above which we will scale up capacity (default 100000)"
+  argument: metrics.target-queue-length
+- comment: "Use metrics-based autoscaling, via this query URL"
+  argument: metrics.url
+- comment: "query to fetch write capacity usage per table (default \"sum(rate(cortex_dynamo_consumed_capacity_total{operation=\"DynamoDB.BatchWriteItem\"}[15m])) by (table) > 0\")"
+  argument: metrics.usage-query
+- comment: "The heartbeat timeout after which ingesters are skipped for reads/writes. (default 1m0s)"
+  argument: ring.heartbeat-timeout
+- comment: "Backend storage to use for the ring (consul, inmemory). (default \"consul\")"
+  argument: ring.store
+- comment: "S3 endpoint URL with escaped Key and Secret encoded. If only region is specified as a host, proper endpoint will be deduced. Use inmemory:///<bucket-name> to use a mock in-memory implementation."
+  argument: s3.url
+- comment: "Timeout for graceful shutdowns (default 30s)"
+  argument: server.graceful-shutdown-timeout
+- comment: "gRPC server listen port. (default 9095)"
+  argument: server.grpc-listen-port
+- comment: "Idle timeout for HTTP server (default 2m0s)"
+  argument: server.http-idle-timeout
+- comment: "HTTP server listen port. (default 80)"
+  argument: server.http-listen-port
+- comment: "Read timeout for HTTP server (default 30s)"
+  argument: server.http-read-timeout
+- comment: "Write timeout for HTTP server (default 30s)"
+  argument: server.http-write-timeout
+- comment: "Register the intrumentation handlers (/metrics etc). (default true)"
+  argument: server.register-instrumentation
+- comment: "When using bigchunk encoding, start a new bigchunk if over this size (0 = unlimited)"
+  argument: store.bigchunk-size-cap-bytes
+- comment: "Cache index entries older than this period. 0 to disable."
+  argument: store.cache-lookups-older-than
+- comment: "Size of in-memory cardinality cache, 0 to disable."
+  argument: store.cardinality-cache-size
+- comment: "Period for which entries in the cardinality cache are valid. (default 1h0m0s)"
+  argument: store.cardinality-cache-validity
+- comment: "Cardinality limit for index queries. (default 100000)"
+  argument: store.cardinality-limit
+- comment: "When saving varbit chunks, pad to 1024 bytes (default true)"
+  argument: store.fullsize-chunks
+- comment: "Cache config for index entry reading. Enable on-disk cache."
+  argument: store.index-cache-read.cache.enable-diskcache
+- comment: "Cache config for index entry reading. Enable in-memory cache."
+  argument: store.index-cache-read.cache.enable-fifocache
+- comment: "Cache config for index entry reading. The default validity of entries for caches unless overridden."
+  argument: store.index-cache-read.default-validity
+- comment: "Cache config for index entry reading. Path to file used to cache chunks. (default \"/var/run/chunks\")"
+  argument: store.index-cache-read.diskcache.path
+- comment: "Cache config for index entry reading. Size of file (bytes) (default 1073741824)"
+  argument: store.index-cache-read.diskcache.size
+- comment: "Cache config for index entry reading. The expiry duration for the cache."
+  argument: store.index-cache-read.fifocache.duration
+- comment: "Cache config for index entry reading. The number of entries to cache."
+  argument: store.index-cache-read.fifocache.size
+- comment: "Cache config for index entry reading. How many chunks to buffer for background write back. (default 10000)"
+  argument: store.index-cache-read.memcache.write-back-buffer
+- comment: "Cache config for index entry reading. How many goroutines to use to write back to memcache. (default 10)"
+  argument: store.index-cache-read.memcache.write-back-goroutines
+- comment: "Cache config for index entry reading. How many keys to fetch in each batch."
+  argument: store.index-cache-read.memcached.batchsize
+- comment: "Cache config for index entry reading. How long keys stay in the memcache."
+  argument: store.index-cache-read.memcached.expiration
+- comment: "Cache config for index entry reading. Hostname for memcached service to use when caching chunks. If empty, no memcached will be used."
+  argument: store.index-cache-read.memcached.hostname
+- comment: "Cache config for index entry reading. Maximum number of idle connections in pool. (default 16)"
+  argument: store.index-cache-read.memcached.max-idle-conns
+- comment: "Cache config for index entry reading. Maximum active requests to memcache. (default 100)"
+  argument: store.index-cache-read.memcached.parallelism
+- comment: "Cache config for index entry reading. SRV service used to discover memcache servers. (default \"memcached\")"
+  argument: store.index-cache-read.memcached.service
+- comment: "Cache config for index entry reading. Maximum time to wait before giving up on memcached requests. (default 100ms)"
+  argument: store.index-cache-read.memcached.timeout
+- comment: "Cache config for index entry reading. Period with which to poll DNS for memcache servers. (default 1m0s)"
+  argument: store.index-cache-read.memcached.update-interval
+- comment: "Cache validity for active index entries. Should be no higher than -ingester.max-chunk-idle. (default 5m0s)"
+  argument: store.index-cache-validity
+- comment: "Cache config for index entry writing. Enable on-disk cache."
+  argument: store.index-cache-write.cache.enable-diskcache
+- comment: "Cache config for index entry writing. Enable in-memory cache."
+  argument: store.index-cache-write.cache.enable-fifocache
+- comment: "Cache config for index entry writing. The default validity of entries for caches unless overridden."
+  argument: store.index-cache-write.default-validity
+- comment: "Cache config for index entry writing. Path to file used to cache chunks. (default \"/var/run/chunks\")"
+  argument: store.index-cache-write.diskcache.path
+- comment: "Cache config for index entry writing. Size of file (bytes) (default 1073741824)"
+  argument: store.index-cache-write.diskcache.size
+- comment: "Cache config for index entry writing. The expiry duration for the cache."
+  argument: store.index-cache-write.fifocache.duration
+- comment: "Cache config for index entry writing. The number of entries to cache."
+  argument: store.index-cache-write.fifocache.size
+- comment: "Cache config for index entry writing. How many chunks to buffer for background write back. (default 10000)"
+  argument: store.index-cache-write.memcache.write-back-buffer
+- comment: "Cache config for index entry writing. How many goroutines to use to write back to memcache. (default 10)"
+  argument: store.index-cache-write.memcache.write-back-goroutines
+- comment: "Cache config for index entry writing. How many keys to fetch in each batch."
+  argument: store.index-cache-write.memcached.batchsize
+- comment: "Cache config for index entry writing. How long keys stay in the memcache."
+  argument: store.index-cache-write.memcached.expiration
+- comment: "Cache config for index entry writing. Hostname for memcached service to use when caching chunks. If empty, no memcached will be used."
+  argument: store.index-cache-write.memcached.hostname
+- comment: "Cache config for index entry writing. Maximum number of idle connections in pool. (default 16)"
+  argument: store.index-cache-write.memcached.max-idle-conns
+- comment: "Cache config for index entry writing. Maximum active requests to memcache. (default 100)"
+  argument: store.index-cache-write.memcached.parallelism
+- comment: "Cache config for index entry writing. SRV service used to discover memcache servers. (default \"memcached\")"
+  argument: store.index-cache-write.memcached.service
+- comment: "Cache config for index entry writing. Maximum time to wait before giving up on memcached requests. (default 100ms)"
+  argument: store.index-cache-write.memcached.timeout
+- comment: "Cache config for index entry writing. Period with which to poll DNS for memcache servers. (default 1m0s)"
+  argument: store.index-cache-write.memcached.update-interval
+- comment: "Limit to length of chunk store queries, 0 to disable."
+  argument: store.max-query-length
+- comment: "Minimum time between chunk update and being saved to the store."
+  argument: store.min-chunk-age
+- comment: "Maximum number of chunks that can be fetched in a single query. (default 2000000)"
+  argument: store.query-chunk-limit
+- comment: "Duration which table will be created/deleted before/after it's needed; we won't accept sample from before this time. (default 10m0s)"
+  argument: validation.create-grace-period
+- comment: "Maximum number of label names per series. (default 30)"
+  argument: validation.max-label-names-per-series
+- comment: "Maximum length accepted for label names (default 1024)"
+  argument: validation.max-length-label-name
+- comment: "Maximum length accepted for label value. This setting also applies to the metric name (default 2048)"
+  argument: validation.max-length-label-value
+- comment: "Reject old samples."
+  argument: validation.reject-old-samples
+  self: true
+- comment: "Maximum accepted sample age before rejecting. (default 336h0m0s)"
+  argument: validation.reject-old-samples.max-age
+querier:
+- comment: "log to standard error as well as files"
+  argument: alsologtostderr
+- comment: "ApplicationAutoscaling endpoint URL with escaped Key and Secret encoded."
+  argument: applicationautoscaling.url
+- comment: "The date (in the format YYYY-MM-DD) after which we use bigtable column keys."
+  argument: bigtable.column-key-from
+- comment: "gRPC client max receive message size (bytes). (default 104857600)"
+  argument: bigtable.grpc-max-recv-msg-size
+- comment: "gRPC client max send message size (bytes). (default 16777216)"
+  argument: bigtable.grpc-max-send-msg-size
+- comment: "Use compression when sending messages."
+  argument: bigtable.grpc-use-gzip-compression
+- comment: "Bigtable instance ID."
+  argument: bigtable.instance
+- comment: "Bigtable project ID."
+  argument: bigtable.project
+- comment: "points to the billing ingester sidecar (should be on localhost) (default \"localhost:24225\")"
+  argument: billing.ingester
+- comment: "Maximum number of billing events to buffer in memory (default 1024)"
+  argument: billing.max-buffered-events
+- comment: "How often to retry sending events to the billing ingester. (default 500ms)"
+  argument: billing.retry-delay
+- comment: "Location of BoltDB index files."
+  argument: boltdb.dir
+- comment: "Cache config for chunks. Enable on-disk cache."
+  argument: cache.enable-diskcache
+- comment: "Cache config for chunks. Enable in-memory cache."
+  argument: cache.enable-fifocache
+- comment: "Comma-separated hostnames or ips of Cassandra instances."
+  argument: cassandra.addresses
+- comment: "Enable password authentication when connecting to cassandra."
+  argument: cassandra.auth
+- comment: "Path to certificate file to verify the peer."
+  argument: cassandra.ca-path
+- comment: "Consistency level for Cassandra. (default \"QUORUM\")"
+  argument: cassandra.consistency
+- comment: "Instruct the cassandra driver to not attempt to get host info from the system.peers table."
+  argument: cassandra.disable-initial-host-lookup
+- comment: "Require SSL certificate validation. (default true)"
+  argument: cassandra.host-verification
+- comment: "Keyspace to use in Cassandra."
+  argument: cassandra.keyspace
+- comment: "Password to use when connecting to cassandra."
+  argument: cassandra.password
+- comment: "Port that Cassandra is running on (default 9042)"
+  argument: cassandra.port
+- comment: "Replication factor to use in Cassandra. (default 1)"
+  argument: cassandra.replication-factor
+- comment: "Use SSL when connecting to cassandra instances."
+  argument: cassandra.ssl
+- comment: "Timeout when connecting to cassandra. (default 600ms)"
+  argument: cassandra.timeout
+- comment: "Username to use when connecting to cassandra."
+  argument: cassandra.username
+- comment: "Which storage client to use (aws, gcp, cassandra, inmemory). (default \"aws\")"
+  argument: chunk.storage-client
+- comment: "Schema config yaml"
+  argument: config-yaml
+- comment: "ACL Token used to interact with Consul."
+  argument: consul.acltoken
+- comment: "HTTP timeout when talking to consul (default 20s)"
+  argument: consul.client-timeout
+- comment: "Enable consistent reads to consul. (default true)"
+  argument: consul.consistent-reads
+- comment: "Hostname and port of Consul. (default \"localhost:8500\")"
+  argument: consul.hostname
+- comment: "Prefix for keys in Consul. (default \"collectors/\")"
+  argument: consul.prefix
+- comment: "Cache config for chunks. The default validity of entries for caches unless overridden."
+  argument: default-validity
+- comment: "Cache config for chunks. Path to file used to cache chunks. (default \"/var/run/chunks\")"
+  argument: diskcache.path
+- comment: "Cache config for chunks. Size of file (bytes) (default 1073741824)"
+  argument: diskcache.size
+- comment: "How frequently to clean up clients for ingesters that have gone away. (default 15s)"
+  argument: distributor.client-cleanup-period
+- comment: "Report number of ingested samples to billing system."
+  argument: distributor.enable-billing
+- comment: "Time to wait before sending more than the minimum successful query requests."
+  argument: distributor.extra-query-delay
+- comment: "Run a health check on each ingester client during periodic cleanup."
+  argument: distributor.health-check-ingesters
+- comment: "Per-user allowed ingestion burst size (in number of samples). Warning, very high limits will be reset every -distributor.limiter-reload-period. (default 50000)"
+  argument: distributor.ingestion-burst-size
+- comment: "Per-user ingestion rate limit in samples per second. (default 25000)"
+  argument: distributor.ingestion-rate-limit
+- comment: "Period at which to reload user ingestion limits. (default 5m0s)"
+  argument: distributor.limiter-reload-period
+- comment: "Timeout for downstream ingesters. (default 2s)"
+  argument: distributor.remote-timeout
+- comment: "The number of ingesters to write to and read from. (default 3)"
+  argument: distributor.replication-factor
+- comment: "Distribute samples based on all labels, as opposed to solely by user and metric name."
+  argument: distributor.shard-by-all-labels
+- comment: "DynamoDB table management requests per second limit. (default 2)"
+  argument: dynamodb.api-limit
+- comment: "The date (in the format YYYY-MM-DD) after which we will stop querying to non-base64 encoded values."
+  argument: dynamodb.base64-buckets-from
+- comment: "Date after which to write chunks to DynamoDB."
+  argument: dynamodb.chunk-table.from
+- comment: "DynamoDB table period. (default 168h0m0s)"
+  argument: dynamodb.chunk-table.period
+- comment: "DynamoDB table prefix for period tables. (default \"cortex_chunks_\")"
+  argument: dynamodb.chunk-table.prefix
+- comment: "Tag (of the form key=value) to be added to all tables under management."
+  argument: dynamodb.chunk-table.tag
+- comment: "Number of chunks to group together to parallelise fetches (zero to disable) (default 10)"
+  argument: dynamodb.chunk.gang.size
+- comment: "Max number of chunk-get operations to start in parallel (default 32)"
+  argument: dynamodb.chunk.get.max.parallelism
+- comment: "The date (in the format YYYY-MM-DD) of the first day for which DynamoDB index buckets should be day-sized vs. hour-sized."
+  argument: dynamodb.daily-buckets-from
+- comment: "Maximum backoff time (default 50s)"
+  argument: dynamodb.max-backoff
+- comment: "Maximum number of times to retry an operation (default 20)"
+  argument: dynamodb.max-retries
+- comment: "Minimum backoff time (default 100ms)"
+  argument: dynamodb.min-backoff
+- comment: "The name of the DynamoDB table used before versioned schemas were introduced. (default \"cortex\")"
+  argument: dynamodb.original-table-name
+- comment: "Date after which to use periodic tables."
+  argument: dynamodb.periodic-table.from
+- comment: "DynamoDB table period. (default 168h0m0s)"
+  argument: dynamodb.periodic-table.period
+- comment: "DynamoDB table prefix for period tables. (default \"cortex_\")"
+  argument: dynamodb.periodic-table.prefix
+- comment: "Tag (of the form key=value) to be added to all tables under management."
+  argument: dynamodb.periodic-table.tag
+- comment: "DynamoDB endpoint URL with escaped Key and Secret encoded. If only region is specified as a host, proper endpoint will be deduced. Use inmemory:///<table-name> to use a mock in-memory implementation."
+  argument: dynamodb.url
+- comment: "Should we use periodic tables."
+  argument: dynamodb.use-periodic-tables
+- comment: "The date (in the format YYYY-MM-DD) after which we enable v4 schema."
+  argument: dynamodb.v4-schema-from
+- comment: "The date (in the format YYYY-MM-DD) after which we enable v5 schema."
+  argument: dynamodb.v5-schema-from
+- comment: "The date (in the format YYYY-MM-DD) after which we enable v6 schema."
+  argument: dynamodb.v6-schema-from
+- comment: "The date (in the format YYYY-MM-DD) after which we enable v9 schema (Series indexing)."
+  argument: dynamodb.v9-schema-from
+- comment: "Cache config for chunks. The expiry duration for the cache."
+  argument: fifocache.duration
+- comment: "Cache config for chunks. The number of entries to cache."
+  argument: fifocache.size
+- comment: "Name of GCS bucket to put chunks in."
+  argument: gcs.bucketname
+- comment: "if non-empty, httptest.NewServer serves on this address and blocks"
+  argument: httptest.serve
+- comment: "gRPC client max receive message size (bytes). (default 104857600)"
+  argument: ingester.client.grpc-max-recv-msg-size
+- comment: "gRPC client max send message size (bytes). (default 16777216)"
+  argument: ingester.client.grpc-max-send-msg-size
+- comment: "Use compression when sending messages."
+  argument: ingester.client.grpc-use-gzip-compression
+- comment: "The maximum number of samples that a query can return. (default 1000000)"
+  argument: ingester.max-samples-per-query
+- comment: "Maximum number of active series per metric name. (default 50000)"
+  argument: ingester.max-series-per-metric
+- comment: "The maximum number of series that a query can return. (default 100000)"
+  argument: ingester.max-series-per-query
+- comment: "Maximum number of active series per user. (default 5000000)"
+  argument: ingester.max-series-per-user
+- comment: "File name of per-user overrides."
+  argument: limits.per-user-override-config
+- comment: "Period with this to reload the overrides. (default 10s)"
+  argument: limits.per-user-override-period
+- comment: "Directory to store chunks in."
+  argument: local.chunk-directory
+- comment: "Only log messages with the given severity or above. Valid levels: [debug, info, warn, error] (default info)"
+  argument: log.level
+- comment: "when logging hits line file:N, emit a stack trace"
+  argument: log_backtrace_at
+- comment: "If non-empty, write log files in this directory"
+  argument: log_dir
+- comment: "log to standard error instead of files"
+  argument: logtostderr
+- comment: "Cache config for chunks. How many chunks to buffer for background write back. (default 10000)"
+  argument: memcache.write-back-buffer
+- comment: "Cache config for chunks. How many goroutines to use to write back to memcache. (default 10)"
+  argument: memcache.write-back-goroutines
+- comment: "Cache config for chunks. How many keys to fetch in each batch."
+  argument: memcached.batchsize
+- comment: "Cache config for chunks. How long keys stay in the memcache."
+  argument: memcached.expiration
+- comment: "Cache config for chunks. Hostname for memcached service to use when caching chunks. If empty, no memcached will be used."
+  argument: memcached.hostname
+- comment: "Cache config for chunks. Maximum number of idle connections in pool. (default 16)"
+  argument: memcached.max-idle-conns
+- comment: "Cache config for chunks. Maximum active requests to memcache. (default 100)"
+  argument: memcached.parallelism
+- comment: "Cache config for chunks. SRV service used to discover memcache servers. (default \"memcached\")"
+  argument: memcached.service
+- comment: "Cache config for chunks. Maximum time to wait before giving up on memcached requests. (default 100ms)"
+  argument: memcached.timeout
+- comment: "Cache config for chunks. Period with which to poll DNS for memcache servers. (default 1m0s)"
+  argument: memcached.update-interval
+- comment: "query to fetch error rates per table (default \"sum(rate(cortex_dynamo_failures_total{error=\"ProvisionedThroughputExceededException\",operation=~\".*Write.*\"}[1m])) by (table) > 0\")"
+  argument: metrics.error-rate-query
+- comment: "query to fetch ingester queue length (default \"sum(avg_over_time(cortex_ingester_flush_queue_length{job=\"cortex/ingester\"}[2m]))\")"
+  argument: metrics.queue-length-query
+- comment: "query to fetch read errors per table (default \"sum(increase(cortex_dynamo_failures_total{operation=\"DynamoDB.QueryPages\",error=\"ProvisionedThroughputExceededException\"}[1m])) by (table) > 0\")"
+  argument: metrics.read-error-query
+- comment: "query to fetch read capacity usage per table (default \"sum(rate(cortex_dynamo_consumed_capacity_total{operation=\"DynamoDB.QueryPages\"}[1h])) by (table) > 0\")"
+  argument: metrics.read-usage-query
+- comment: "Scale up capacity by this multiple (default 1.3)"
+  argument: metrics.scale-up-factor
+- comment: "Queue length above which we will scale up capacity (default 100000)"
+  argument: metrics.target-queue-length
+- comment: "Use metrics-based autoscaling, via this query URL"
+  argument: metrics.url
+- comment: "query to fetch write capacity usage per table (default \"sum(rate(cortex_dynamo_consumed_capacity_total{operation=\"DynamoDB.BatchWriteItem\"}[15m])) by (table) > 0\")"
+  argument: metrics.usage-query
+- comment: "Time since the last sample after which a time series is considered stale and ignored by expression evaluations. (default 5m0s)"
+  argument: promql.lookback-delta
+- comment: "Use batch iterators to execute query, as opposed to fully materialising the series in memory.  Takes precedent over the -querier.iterators flag."
+  argument: querier.batch-iterators
+- comment: "How often to query DNS. (default 10s)"
+  argument: querier.dns-lookup-period
+- comment: "Address of query frontend service."
+  argument: querier.frontend-address
+- comment: "gRPC client max receive message size (bytes). (default 104857600)"
+  argument: querier.frontend-client.grpc-max-recv-msg-size
+- comment: "gRPC client max send message size (bytes). (default 16777216)"
+  argument: querier.frontend-client.grpc-max-send-msg-size
+- comment: "Use compression when sending messages."
+  argument: querier.frontend-client.grpc-use-gzip-compression
+- comment: "Use streaming RPCs to query ingester."
+  argument: querier.ingester-streaming
+- comment: "Use iterators to execute query, as opposed to fully materialising the series in memory."
+  argument: querier.iterators
+- comment: "The maximum number of concurrent queries. (default 20)"
+  argument: querier.max-concurrent
+- comment: "Maximum number of samples a single query can load into memory. (default 50000000)"
+  argument: querier.max-samples
+- comment: "Maximum lookback beyond which queries are not sent to ingester. 0 means all queries are sent to ingester."
+  argument: querier.query-ingesters-within
+- comment: "Max subqueries run in parallel per higher-level query. (default 100)"
+  argument: querier.query-parallelism
+- comment: "The timeout for a query. (default 2m0s)"
+  argument: querier.timeout
+- comment: "Number of simultaneous queries to process. (default 10)"
+  argument: querier.worker-parallelism
+- comment: "The heartbeat timeout after which ingesters are skipped for reads/writes. (default 1m0s)"
+  argument: ring.heartbeat-timeout
+- comment: "Backend storage to use for the ring (consul, inmemory). (default \"consul\")"
+  argument: ring.store
+- comment: "S3 endpoint URL with escaped Key and Secret encoded. If only region is specified as a host, proper endpoint will be deduced. Use inmemory:///<bucket-name> to use a mock in-memory implementation."
+  argument: s3.url
+- comment: "Timeout for graceful shutdowns (default 30s)"
+  argument: server.graceful-shutdown-timeout
+- comment: "gRPC server listen port. (default 9095)"
+  argument: server.grpc-listen-port
+- comment: "Idle timeout for HTTP server (default 2m0s)"
+  argument: server.http-idle-timeout
+- comment: "HTTP server listen port. (default 80)"
+  argument: server.http-listen-port
+- comment: "Read timeout for HTTP server (default 30s)"
+  argument: server.http-read-timeout
+- comment: "Write timeout for HTTP server (default 30s)"
+  argument: server.http-write-timeout
+- comment: "Register the intrumentation handlers (/metrics etc). (default true)"
+  argument: server.register-instrumentation
+- comment: "logs at or above this threshold go to stderr"
+  argument: stderrthreshold
+- comment: "Cache index entries older than this period. 0 to disable."
+  argument: store.cache-lookups-older-than
+- comment: "Size of in-memory cardinality cache, 0 to disable."
+  argument: store.cardinality-cache-size
+- comment: "Period for which entries in the cardinality cache are valid. (default 1h0m0s)"
+  argument: store.cardinality-cache-validity
+- comment: "Cardinality limit for index queries. (default 100000)"
+  argument: store.cardinality-limit
+- comment: "Cache config for index entry reading. Enable on-disk cache."
+  argument: store.index-cache-read.cache.enable-diskcache
+- comment: "Cache config for index entry reading. Enable in-memory cache."
+  argument: store.index-cache-read.cache.enable-fifocache
+- comment: "Cache config for index entry reading. The default validity of entries for caches unless overridden."
+  argument: store.index-cache-read.default-validity
+- comment: "Cache config for index entry reading. Path to file used to cache chunks. (default \"/var/run/chunks\")"
+  argument: store.index-cache-read.diskcache.path
+- comment: "Cache config for index entry reading. Size of file (bytes) (default 1073741824)"
+  argument: store.index-cache-read.diskcache.size
+- comment: "Cache config for index entry reading. The expiry duration for the cache."
+  argument: store.index-cache-read.fifocache.duration
+- comment: "Cache config for index entry reading. The number of entries to cache."
+  argument: store.index-cache-read.fifocache.size
+- comment: "Cache config for index entry reading. How many chunks to buffer for background write back. (default 10000)"
+  argument: store.index-cache-read.memcache.write-back-buffer
+- comment: "Cache config for index entry reading. How many goroutines to use to write back to memcache. (default 10)"
+  argument: store.index-cache-read.memcache.write-back-goroutines
+- comment: "Cache config for index entry reading. How many keys to fetch in each batch."
+  argument: store.index-cache-read.memcached.batchsize
+- comment: "Cache config for index entry reading. How long keys stay in the memcache."
+  argument: store.index-cache-read.memcached.expiration
+- comment: "Cache config for index entry reading. Hostname for memcached service to use when caching chunks. If empty, no memcached will be used."
+  argument: store.index-cache-read.memcached.hostname
+- comment: "Cache config for index entry reading. Maximum number of idle connections in pool. (default 16)"
+  argument: store.index-cache-read.memcached.max-idle-conns
+- comment: "Cache config for index entry reading. Maximum active requests to memcache. (default 100)"
+  argument: store.index-cache-read.memcached.parallelism
+- comment: "Cache config for index entry reading. SRV service used to discover memcache servers. (default \"memcached\")"
+  argument: store.index-cache-read.memcached.service
+- comment: "Cache config for index entry reading. Maximum time to wait before giving up on memcached requests. (default 100ms)"
+  argument: store.index-cache-read.memcached.timeout
+- comment: "Cache config for index entry reading. Period with which to poll DNS for memcache servers. (default 1m0s)"
+  argument: store.index-cache-read.memcached.update-interval
+- comment: "Cache validity for active index entries. Should be no higher than -ingester.max-chunk-idle. (default 5m0s)"
+  argument: store.index-cache-validity
+- comment: "Cache config for index entry writing. Enable on-disk cache."
+  argument: store.index-cache-write.cache.enable-diskcache
+- comment: "Cache config for index entry writing. Enable in-memory cache."
+  argument: store.index-cache-write.cache.enable-fifocache
+- comment: "Cache config for index entry writing. The default validity of entries for caches unless overridden."
+  argument: store.index-cache-write.default-validity
+- comment: "Cache config for index entry writing. Path to file used to cache chunks. (default \"/var/run/chunks\")"
+  argument: store.index-cache-write.diskcache.path
+- comment: "Cache config for index entry writing. Size of file (bytes) (default 1073741824)"
+  argument: store.index-cache-write.diskcache.size
+- comment: "Cache config for index entry writing. The expiry duration for the cache."
+  argument: store.index-cache-write.fifocache.duration
+- comment: "Cache config for index entry writing. The number of entries to cache."
+  argument: store.index-cache-write.fifocache.size
+- comment: "Cache config for index entry writing. How many chunks to buffer for background write back. (default 10000)"
+  argument: store.index-cache-write.memcache.write-back-buffer
+- comment: "Cache config for index entry writing. How many goroutines to use to write back to memcache. (default 10)"
+  argument: store.index-cache-write.memcache.write-back-goroutines
+- comment: "Cache config for index entry writing. How many keys to fetch in each batch."
+  argument: store.index-cache-write.memcached.batchsize
+- comment: "Cache config for index entry writing. How long keys stay in the memcache."
+  argument: store.index-cache-write.memcached.expiration
+- comment: "Cache config for index entry writing. Hostname for memcached service to use when caching chunks. If empty, no memcached will be used."
+  argument: store.index-cache-write.memcached.hostname
+- comment: "Cache config for index entry writing. Maximum number of idle connections in pool. (default 16)"
+  argument: store.index-cache-write.memcached.max-idle-conns
+- comment: "Cache config for index entry writing. Maximum active requests to memcache. (default 100)"
+  argument: store.index-cache-write.memcached.parallelism
+- comment: "Cache config for index entry writing. SRV service used to discover memcache servers. (default \"memcached\")"
+  argument: store.index-cache-write.memcached.service
+- comment: "Cache config for index entry writing. Maximum time to wait before giving up on memcached requests. (default 100ms)"
+  argument: store.index-cache-write.memcached.timeout
+- comment: "Cache config for index entry writing. Period with which to poll DNS for memcache servers. (default 1m0s)"
+  argument: store.index-cache-write.memcached.update-interval
+- comment: "Limit to length of chunk store queries, 0 to disable."
+  argument: store.max-query-length
+- comment: "Minimum time between chunk update and being saved to the store."
+  argument: store.min-chunk-age
+- comment: "Maximum number of chunks that can be fetched in a single query. (default 2000000)"
+  argument: store.query-chunk-limit
+- comment: "log level for V logs"
+  argument: v
+- comment: "Duration which table will be created/deleted before/after it's needed; we won't accept sample from before this time. (default 10m0s)"
+  argument: validation.create-grace-period
+- comment: "Maximum number of label names per series. (default 30)"
+  argument: validation.max-label-names-per-series
+- comment: "Maximum length accepted for label names (default 1024)"
+  argument: validation.max-length-label-name
+- comment: "Maximum length accepted for label value. This setting also applies to the metric name (default 2048)"
+  argument: validation.max-length-label-value
+- comment: "Reject old samples."
+  argument: validation.reject-old-samples
+  self: true
+- comment: "Maximum accepted sample age before rejecting. (default 336h0m0s)"
+  argument: validation.reject-old-samples.max-age
+- comment: "comma-separated list of pattern=N settings for file-filtered logging"
+  argument: vmodule
+query-frontend:
+- comment: "Enable on-disk cache."
+  argument: cache.enable-diskcache
+- comment: "Enable in-memory cache."
+  argument: cache.enable-fifocache
+- comment: "The default validity of entries for caches unless overridden."
+  argument: default-validity
+- comment: "Path to file used to cache chunks. (default \"/var/run/chunks\")"
+  argument: diskcache.path
+- comment: "Size of file (bytes) (default 1073741824)"
+  argument: diskcache.size
+- comment: "The expiry duration for the cache."
+  argument: fifocache.duration
+- comment: "The number of entries to cache."
+  argument: fifocache.size
+- comment: "Most recent allowed cacheable result, to prevent caching very recent results that might still be in flux. (default 1m0s)"
+  argument: frontend.max-cache-freshness
+- comment: "if non-empty, httptest.NewServer serves on this address and blocks"
+  argument: httptest.serve
+- comment: "Only log messages with the given severity or above. Valid levels: [debug, info, warn, error] (default info)"
+  argument: log.level
+- comment: "How many chunks to buffer for background write back. (default 10000)"
+  argument: memcache.write-back-buffer
+- comment: "How many goroutines to use to write back to memcache. (default 10)"
+  argument: memcache.write-back-goroutines
+- comment: "How many keys to fetch in each batch."
+  argument: memcached.batchsize
+- comment: "How long keys stay in the memcache."
+  argument: memcached.expiration
+- comment: "Hostname for memcached service to use when caching chunks. If empty, no memcached will be used."
+  argument: memcached.hostname
+- comment: "Maximum number of idle connections in pool. (default 16)"
+  argument: memcached.max-idle-conns
+- comment: "Maximum active requests to memcache. (default 100)"
+  argument: memcached.parallelism
+- comment: "SRV service used to discover memcache servers. (default \"memcached\")"
+  argument: memcached.service
+- comment: "Maximum time to wait before giving up on memcached requests. (default 100ms)"
+  argument: memcached.timeout
+- comment: "Period with which to poll DNS for memcache servers. (default 1m0s)"
+  argument: memcached.update-interval
+- comment: "Mutate incoming queries to align their start and end with their step."
+  argument: querier.align-querier-with-step
+- comment: "Cache query results."
+  argument: querier.cache-results
+- comment: "Maximum number of outstanding requests per tenant per frontend; requests beyond this error with HTTP 429. (default 100)"
+  argument: querier.max-outstanding-requests-per-tenant
+- comment: "Maximum number of retries for a single request; beyond this, the downstream error is returned. (default 5)"
+  argument: querier.max-retries-per-request
+- comment: "Split queries by day and execute in parallel."
+  argument: querier.split-queries-by-day
+- comment: "Limit on the size of a grpc message this server can receive. (default 67108864)"
+  argument: query-frontend.max-recv-message-size-bytes
+- comment: "Timeout for graceful shutdowns (default 30s)"
+  argument: server.graceful-shutdown-timeout
+- comment: "gRPC server listen port. (default 9095)"
+  argument: server.grpc-listen-port
+- comment: "Idle timeout for HTTP server (default 2m0s)"
+  argument: server.http-idle-timeout
+- comment: "HTTP server listen port. (default 80)"
+  argument: server.http-listen-port
+- comment: "Read timeout for HTTP server (default 30s)"
+  argument: server.http-read-timeout
+- comment: "Write timeout for HTTP server (default 30s)"
+  argument: server.http-write-timeout
+- comment: "Register the intrumentation handlers (/metrics etc). (default true)"
+  argument: server.register-instrumentation
+ruler:
+- comment: "log to standard error as well as files"
+  argument: alsologtostderr
+- comment: "ApplicationAutoscaling endpoint URL with escaped Key and Secret encoded."
+  argument: applicationautoscaling.url
+- comment: "The date (in the format YYYY-MM-DD) after which we use bigtable column keys."
+  argument: bigtable.column-key-from
+- comment: "gRPC client max receive message size (bytes). (default 104857600)"
+  argument: bigtable.grpc-max-recv-msg-size
+- comment: "gRPC client max send message size (bytes). (default 16777216)"
+  argument: bigtable.grpc-max-send-msg-size
+- comment: "Use compression when sending messages."
+  argument: bigtable.grpc-use-gzip-compression
+- comment: "Bigtable instance ID."
+  argument: bigtable.instance
+- comment: "Bigtable project ID."
+  argument: bigtable.project
+- comment: "points to the billing ingester sidecar (should be on localhost) (default \"localhost:24225\")"
+  argument: billing.ingester
+- comment: "Maximum number of billing events to buffer in memory (default 1024)"
+  argument: billing.max-buffered-events
+- comment: "How often to retry sending events to the billing ingester. (default 500ms)"
+  argument: billing.retry-delay
+- comment: "Location of BoltDB index files."
+  argument: boltdb.dir
+- comment: "Cache config for chunks. Enable on-disk cache."
+  argument: cache.enable-diskcache
+- comment: "Cache config for chunks. Enable in-memory cache."
+  argument: cache.enable-fifocache
+- comment: "Comma-separated hostnames or ips of Cassandra instances."
+  argument: cassandra.addresses
+- comment: "Enable password authentication when connecting to cassandra."
+  argument: cassandra.auth
+- comment: "Path to certificate file to verify the peer."
+  argument: cassandra.ca-path
+- comment: "Consistency level for Cassandra. (default \"QUORUM\")"
+  argument: cassandra.consistency
+- comment: "Instruct the cassandra driver to not attempt to get host info from the system.peers table."
+  argument: cassandra.disable-initial-host-lookup
+- comment: "Require SSL certificate validation. (default true)"
+  argument: cassandra.host-verification
+- comment: "Keyspace to use in Cassandra."
+  argument: cassandra.keyspace
+- comment: "Password to use when connecting to cassandra."
+  argument: cassandra.password
+- comment: "Port that Cassandra is running on (default 9042)"
+  argument: cassandra.port
+- comment: "Replication factor to use in Cassandra. (default 1)"
+  argument: cassandra.replication-factor
+- comment: "Use SSL when connecting to cassandra instances."
+  argument: cassandra.ssl
+- comment: "Timeout when connecting to cassandra. (default 600ms)"
+  argument: cassandra.timeout
+- comment: "Username to use when connecting to cassandra."
+  argument: cassandra.username
+- comment: "Which storage client to use (aws, gcp, cassandra, inmemory). (default \"aws\")"
+  argument: chunk.storage-client
+- comment: "Schema config yaml"
+  argument: config-yaml
+- comment: "ACL Token used to interact with Consul."
+  argument: consul.acltoken
+- comment: "HTTP timeout when talking to consul (default 20s)"
+  argument: consul.client-timeout
+- comment: "Enable consistent reads to consul. (default true)"
+  argument: consul.consistent-reads
+- comment: "Hostname and port of Consul. (default \"localhost:8500\")"
+  argument: consul.hostname
+- comment: "Prefix for keys in Consul. (default \"collectors/\")"
+  argument: consul.prefix
+- comment: "Path where the database migration files can be found"
+  argument: database.migrations
+- comment: "File containing password (username goes in URI)"
+  argument: database.password-file
+- comment: "URI where the database can be found (for dev you can use memory://) (default \"postgres://postgres@configs-db.weave.local/configs?sslmode=disable\")"
+  argument: database.uri
+- comment: "Cache config for chunks. The default validity of entries for caches unless overridden."
+  argument: default-validity
+- comment: "Cache config for chunks. Path to file used to cache chunks. (default \"/var/run/chunks\")"
+  argument: diskcache.path
+- comment: "Cache config for chunks. Size of file (bytes) (default 1073741824)"
+  argument: diskcache.size
+- comment: "How frequently to clean up clients for ingesters that have gone away. (default 15s)"
+  argument: distributor.client-cleanup-period
+- comment: "Report number of ingested samples to billing system."
+  argument: distributor.enable-billing
+- comment: "Time to wait before sending more than the minimum successful query requests."
+  argument: distributor.extra-query-delay
+- comment: "Run a health check on each ingester client during periodic cleanup."
+  argument: distributor.health-check-ingesters
+- comment: "Per-user allowed ingestion burst size (in number of samples). Warning, very high limits will be reset every -distributor.limiter-reload-period. (default 50000)"
+  argument: distributor.ingestion-burst-size
+- comment: "Per-user ingestion rate limit in samples per second. (default 25000)"
+  argument: distributor.ingestion-rate-limit
+- comment: "Period at which to reload user ingestion limits. (default 5m0s)"
+  argument: distributor.limiter-reload-period
+- comment: "Timeout for downstream ingesters. (default 2s)"
+  argument: distributor.remote-timeout
+- comment: "The number of ingesters to write to and read from. (default 3)"
+  argument: distributor.replication-factor
+- comment: "Distribute samples based on all labels, as opposed to solely by user and metric name."
+  argument: distributor.shard-by-all-labels
+- comment: "DynamoDB table management requests per second limit. (default 2)"
+  argument: dynamodb.api-limit
+- comment: "The date (in the format YYYY-MM-DD) after which we will stop querying to non-base64 encoded values."
+  argument: dynamodb.base64-buckets-from
+- comment: "Date after which to write chunks to DynamoDB."
+  argument: dynamodb.chunk-table.from
+- comment: "DynamoDB table period. (default 168h0m0s)"
+  argument: dynamodb.chunk-table.period
+- comment: "DynamoDB table prefix for period tables. (default \"cortex_chunks_\")"
+  argument: dynamodb.chunk-table.prefix
+- comment: "Tag (of the form key=value) to be added to all tables under management."
+  argument: dynamodb.chunk-table.tag
+- comment: "Number of chunks to group together to parallelise fetches (zero to disable) (default 10)"
+  argument: dynamodb.chunk.gang.size
+- comment: "Max number of chunk-get operations to start in parallel (default 32)"
+  argument: dynamodb.chunk.get.max.parallelism
+- comment: "The date (in the format YYYY-MM-DD) of the first day for which DynamoDB index buckets should be day-sized vs. hour-sized."
+  argument: dynamodb.daily-buckets-from
+- comment: "Maximum backoff time (default 50s)"
+  argument: dynamodb.max-backoff
+- comment: "Maximum number of times to retry an operation (default 20)"
+  argument: dynamodb.max-retries
+- comment: "Minimum backoff time (default 100ms)"
+  argument: dynamodb.min-backoff
+- comment: "The name of the DynamoDB table used before versioned schemas were introduced. (default \"cortex\")"
+  argument: dynamodb.original-table-name
+- comment: "Date after which to use periodic tables."
+  argument: dynamodb.periodic-table.from
+- comment: "DynamoDB table period. (default 168h0m0s)"
+  argument: dynamodb.periodic-table.period
+- comment: "DynamoDB table prefix for period tables. (default \"cortex_\")"
+  argument: dynamodb.periodic-table.prefix
+- comment: "Tag (of the form key=value) to be added to all tables under management."
+  argument: dynamodb.periodic-table.tag
+- comment: "DynamoDB endpoint URL with escaped Key and Secret encoded. If only region is specified as a host, proper endpoint will be deduced. Use inmemory:///<table-name> to use a mock in-memory implementation."
+  argument: dynamodb.url
+- comment: "Should we use periodic tables."
+  argument: dynamodb.use-periodic-tables
+- comment: "The date (in the format YYYY-MM-DD) after which we enable v4 schema."
+  argument: dynamodb.v4-schema-from
+- comment: "The date (in the format YYYY-MM-DD) after which we enable v5 schema."
+  argument: dynamodb.v5-schema-from
+- comment: "The date (in the format YYYY-MM-DD) after which we enable v6 schema."
+  argument: dynamodb.v6-schema-from
+- comment: "The date (in the format YYYY-MM-DD) after which we enable v9 schema (Series indexing)."
+  argument: dynamodb.v9-schema-from
+- comment: "Cache config for chunks. The expiry duration for the cache."
+  argument: fifocache.duration
+- comment: "Cache config for chunks. The number of entries to cache."
+  argument: fifocache.size
+- comment: "Name of GCS bucket to put chunks in."
+  argument: gcs.bucketname
+- comment: "if non-empty, httptest.NewServer serves on this address and blocks"
+  argument: httptest.serve
+- comment: "gRPC client max receive message size (bytes). (default 104857600)"
+  argument: ingester.client.grpc-max-recv-msg-size
+- comment: "gRPC client max send message size (bytes). (default 16777216)"
+  argument: ingester.client.grpc-max-send-msg-size
+- comment: "Use compression when sending messages."
+  argument: ingester.client.grpc-use-gzip-compression
+- comment: "The maximum number of samples that a query can return. (default 1000000)"
+  argument: ingester.max-samples-per-query
+- comment: "Maximum number of active series per metric name. (default 50000)"
+  argument: ingester.max-series-per-metric
+- comment: "The maximum number of series that a query can return. (default 100000)"
+  argument: ingester.max-series-per-query
+- comment: "Maximum number of active series per user. (default 5000000)"
+  argument: ingester.max-series-per-user
+- comment: "File name of per-user overrides."
+  argument: limits.per-user-override-config
+- comment: "Period with this to reload the overrides. (default 10s)"
+  argument: limits.per-user-override-period
+- comment: "Directory to store chunks in."
+  argument: local.chunk-directory
+- comment: "Only log messages with the given severity or above. Valid levels: [debug, info, warn, error] (default info)"
+  argument: log.level
+- comment: "when logging hits line file:N, emit a stack trace"
+  argument: log_backtrace_at
+- comment: "If non-empty, write log files in this directory"
+  argument: log_dir
+- comment: "log to standard error instead of files"
+  argument: logtostderr
+- comment: "Cache config for chunks. How many chunks to buffer for background write back. (default 10000)"
+  argument: memcache.write-back-buffer
+- comment: "Cache config for chunks. How many goroutines to use to write back to memcache. (default 10)"
+  argument: memcache.write-back-goroutines
+- comment: "Cache config for chunks. How many keys to fetch in each batch."
+  argument: memcached.batchsize
+- comment: "Cache config for chunks. How long keys stay in the memcache."
+  argument: memcached.expiration
+- comment: "Cache config for chunks. Hostname for memcached service to use when caching chunks. If empty, no memcached will be used."
+  argument: memcached.hostname
+- comment: "Cache config for chunks. Maximum number of idle connections in pool. (default 16)"
+  argument: memcached.max-idle-conns
+- comment: "Cache config for chunks. Maximum active requests to memcache. (default 100)"
+  argument: memcached.parallelism
+- comment: "Cache config for chunks. SRV service used to discover memcache servers. (default \"memcached\")"
+  argument: memcached.service
+- comment: "Cache config for chunks. Maximum time to wait before giving up on memcached requests. (default 100ms)"
+  argument: memcached.timeout
+- comment: "Cache config for chunks. Period with which to poll DNS for memcache servers. (default 1m0s)"
+  argument: memcached.update-interval
+- comment: "query to fetch error rates per table (default \"sum(rate(cortex_dynamo_failures_total{error=\"ProvisionedThroughputExceededException\",operation=~\".*Write.*\"}[1m])) by (table) > 0\")"
+  argument: metrics.error-rate-query
+- comment: "query to fetch ingester queue length (default \"sum(avg_over_time(cortex_ingester_flush_queue_length{job=\"cortex/ingester\"}[2m]))\")"
+  argument: metrics.queue-length-query
+- comment: "query to fetch read errors per table (default \"sum(increase(cortex_dynamo_failures_total{operation=\"DynamoDB.QueryPages\",error=\"ProvisionedThroughputExceededException\"}[1m])) by (table) > 0\")"
+  argument: metrics.read-error-query
+- comment: "query to fetch read capacity usage per table (default \"sum(rate(cortex_dynamo_consumed_capacity_total{operation=\"DynamoDB.QueryPages\"}[1h])) by (table) > 0\")"
+  argument: metrics.read-usage-query
+- comment: "Scale up capacity by this multiple (default 1.3)"
+  argument: metrics.scale-up-factor
+- comment: "Queue length above which we will scale up capacity (default 100000)"
+  argument: metrics.target-queue-length
+- comment: "Use metrics-based autoscaling, via this query URL"
+  argument: metrics.url
+- comment: "query to fetch write capacity usage per table (default \"sum(rate(cortex_dynamo_consumed_capacity_total{operation=\"DynamoDB.BatchWriteItem\"}[15m])) by (table) > 0\")"
+  argument: metrics.usage-query
+- comment: "Time since the last sample after which a time series is considered stale and ignored by expression evaluations. (default 5m0s)"
+  argument: promql.lookback-delta
+- comment: "Use batch iterators to execute query, as opposed to fully materialising the series in memory.  Takes precedent over the -querier.iterators flag."
+  argument: querier.batch-iterators
+- comment: "Use streaming RPCs to query ingester."
+  argument: querier.ingester-streaming
+- comment: "Use iterators to execute query, as opposed to fully materialising the series in memory."
+  argument: querier.iterators
+- comment: "The maximum number of concurrent queries. (default 20)"
+  argument: querier.max-concurrent
+- comment: "Maximum number of samples a single query can load into memory. (default 50000000)"
+  argument: querier.max-samples
+- comment: "Maximum lookback beyond which queries are not sent to ingester. 0 means all queries are sent to ingester."
+  argument: querier.query-ingesters-within
+- comment: "The timeout for a query. (default 2m0s)"
+  argument: querier.timeout
+- comment: "The heartbeat timeout after which ingesters are skipped for reads/writes. (default 1m0s)"
+  argument: ring.heartbeat-timeout
+- comment: "Backend storage to use for the ring (consul, inmemory). (default \"consul\")"
+  argument: ring.store
+- comment: "Use DNS SRV records to discover alertmanager hosts."
+  argument: ruler.alertmanager-discovery
+- comment: "How long to wait between refreshing alertmanager hosts. (default 1m0s)"
+  argument: ruler.alertmanager-refresh-interval
+- comment: "URL of the Alertmanager to send notifications to."
+  argument: ruler.alertmanager-url
+- comment: "How frequently to evaluate rules (default 15s)"
+  argument: ruler.evaluation-interval
+- comment: "URL of alerts return path."
+  argument: ruler.external.url
+- comment: "Timeout for rule group evaluation, including sending result to ingester (default 10s)"
+  argument: ruler.group-timeout
+- comment: "Capacity of the queue for notifications to be sent to the Alertmanager. (default 10000)"
+  argument: ruler.notification-queue-capacity
+- comment: "HTTP timeout duration when sending notifications to the Alertmanager. (default 10s)"
+  argument: ruler.notification-timeout
+- comment: "Number of rule evaluator worker routines in this process (default 1)"
+  argument: ruler.num-workers
+- comment: "S3 endpoint URL with escaped Key and Secret encoded. If only region is specified as a host, proper endpoint will be deduced. Use inmemory:///<bucket-name> to use a mock in-memory implementation."
+  argument: s3.url
+- comment: "Timeout for graceful shutdowns (default 30s)"
+  argument: server.graceful-shutdown-timeout
+- comment: "gRPC server listen port. (default 9095)"
+  argument: server.grpc-listen-port
+- comment: "Idle timeout for HTTP server (default 2m0s)"
+  argument: server.http-idle-timeout
+- comment: "HTTP server listen port. (default 80)"
+  argument: server.http-listen-port
+- comment: "Read timeout for HTTP server (default 30s)"
+  argument: server.http-read-timeout
+- comment: "Write timeout for HTTP server (default 30s)"
+  argument: server.http-write-timeout
+- comment: "Register the intrumentation handlers (/metrics etc). (default true)"
+  argument: server.register-instrumentation
+- comment: "logs at or above this threshold go to stderr"
+  argument: stderrthreshold
+- comment: "Cache index entries older than this period. 0 to disable."
+  argument: store.cache-lookups-older-than
+- comment: "Size of in-memory cardinality cache, 0 to disable."
+  argument: store.cardinality-cache-size
+- comment: "Period for which entries in the cardinality cache are valid. (default 1h0m0s)"
+  argument: store.cardinality-cache-validity
+- comment: "Cardinality limit for index queries. (default 100000)"
+  argument: store.cardinality-limit
+- comment: "Cache config for index entry reading. Enable on-disk cache."
+  argument: store.index-cache-read.cache.enable-diskcache
+- comment: "Cache config for index entry reading. Enable in-memory cache."
+  argument: store.index-cache-read.cache.enable-fifocache
+- comment: "Cache config for index entry reading. The default validity of entries for caches unless overridden."
+  argument: store.index-cache-read.default-validity
+- comment: "Cache config for index entry reading. Path to file used to cache chunks. (default \"/var/run/chunks\")"
+  argument: store.index-cache-read.diskcache.path
+- comment: "Cache config for index entry reading. Size of file (bytes) (default 1073741824)"
+  argument: store.index-cache-read.diskcache.size
+- comment: "Cache config for index entry reading. The expiry duration for the cache."
+  argument: store.index-cache-read.fifocache.duration
+- comment: "Cache config for index entry reading. The number of entries to cache."
+  argument: store.index-cache-read.fifocache.size
+- comment: "Cache config for index entry reading. How many chunks to buffer for background write back. (default 10000)"
+  argument: store.index-cache-read.memcache.write-back-buffer
+- comment: "Cache config for index entry reading. How many goroutines to use to write back to memcache. (default 10)"
+  argument: store.index-cache-read.memcache.write-back-goroutines
+- comment: "Cache config for index entry reading. How many keys to fetch in each batch."
+  argument: store.index-cache-read.memcached.batchsize
+- comment: "Cache config for index entry reading. How long keys stay in the memcache."
+  argument: store.index-cache-read.memcached.expiration
+- comment: "Cache config for index entry reading. Hostname for memcached service to use when caching chunks. If empty, no memcached will be used."
+  argument: store.index-cache-read.memcached.hostname
+- comment: "Cache config for index entry reading. Maximum number of idle connections in pool. (default 16)"
+  argument: store.index-cache-read.memcached.max-idle-conns
+- comment: "Cache config for index entry reading. Maximum active requests to memcache. (default 100)"
+  argument: store.index-cache-read.memcached.parallelism
+- comment: "Cache config for index entry reading. SRV service used to discover memcache servers. (default \"memcached\")"
+  argument: store.index-cache-read.memcached.service
+- comment: "Cache config for index entry reading. Maximum time to wait before giving up on memcached requests. (default 100ms)"
+  argument: store.index-cache-read.memcached.timeout
+- comment: "Cache config for index entry reading. Period with which to poll DNS for memcache servers. (default 1m0s)"
+  argument: store.index-cache-read.memcached.update-interval
+- comment: "Cache validity for active index entries. Should be no higher than -ingester.max-chunk-idle. (default 5m0s)"
+  argument: store.index-cache-validity
+- comment: "Cache config for index entry writing. Enable on-disk cache."
+  argument: store.index-cache-write.cache.enable-diskcache
+- comment: "Cache config for index entry writing. Enable in-memory cache."
+  argument: store.index-cache-write.cache.enable-fifocache
+- comment: "Cache config for index entry writing. The default validity of entries for caches unless overridden."
+  argument: store.index-cache-write.default-validity
+- comment: "Cache config for index entry writing. Path to file used to cache chunks. (default \"/var/run/chunks\")"
+  argument: store.index-cache-write.diskcache.path
+- comment: "Cache config for index entry writing. Size of file (bytes) (default 1073741824)"
+  argument: store.index-cache-write.diskcache.size
+- comment: "Cache config for index entry writing. The expiry duration for the cache."
+  argument: store.index-cache-write.fifocache.duration
+- comment: "Cache config for index entry writing. The number of entries to cache."
+  argument: store.index-cache-write.fifocache.size
+- comment: "Cache config for index entry writing. How many chunks to buffer for background write back. (default 10000)"
+  argument: store.index-cache-write.memcache.write-back-buffer
+- comment: "Cache config for index entry writing. How many goroutines to use to write back to memcache. (default 10)"
+  argument: store.index-cache-write.memcache.write-back-goroutines
+- comment: "Cache config for index entry writing. How many keys to fetch in each batch."
+  argument: store.index-cache-write.memcached.batchsize
+- comment: "Cache config for index entry writing. How long keys stay in the memcache."
+  argument: store.index-cache-write.memcached.expiration
+- comment: "Cache config for index entry writing. Hostname for memcached service to use when caching chunks. If empty, no memcached will be used."
+  argument: store.index-cache-write.memcached.hostname
+- comment: "Cache config for index entry writing. Maximum number of idle connections in pool. (default 16)"
+  argument: store.index-cache-write.memcached.max-idle-conns
+- comment: "Cache config for index entry writing. Maximum active requests to memcache. (default 100)"
+  argument: store.index-cache-write.memcached.parallelism
+- comment: "Cache config for index entry writing. SRV service used to discover memcache servers. (default \"memcached\")"
+  argument: store.index-cache-write.memcached.service
+- comment: "Cache config for index entry writing. Maximum time to wait before giving up on memcached requests. (default 100ms)"
+  argument: store.index-cache-write.memcached.timeout
+- comment: "Cache config for index entry writing. Period with which to poll DNS for memcache servers. (default 1m0s)"
+  argument: store.index-cache-write.memcached.update-interval
+- comment: "Limit to length of chunk store queries, 0 to disable."
+  argument: store.max-query-length
+- comment: "Minimum time between chunk update and being saved to the store."
+  argument: store.min-chunk-age
+- comment: "Maximum number of chunks that can be fetched in a single query. (default 2000000)"
+  argument: store.query-chunk-limit
+- comment: "log level for V logs"
+  argument: v
+- comment: "Duration which table will be created/deleted before/after it's needed; we won't accept sample from before this time. (default 10m0s)"
+  argument: validation.create-grace-period
+- comment: "Maximum number of label names per series. (default 30)"
+  argument: validation.max-label-names-per-series
+- comment: "Maximum length accepted for label names (default 1024)"
+  argument: validation.max-length-label-name
+- comment: "Maximum length accepted for label value. This setting also applies to the metric name (default 2048)"
+  argument: validation.max-length-label-value
+- comment: "Reject old samples."
+  argument: validation.reject-old-samples
+  self: true
+- comment: "Maximum accepted sample age before rejecting. (default 336h0m0s)"
+  argument: validation.reject-old-samples.max-age
+- comment: "comma-separated list of pattern=N settings for file-filtered logging"
+  argument: vmodule
+table-manager:
+- comment: "ApplicationAutoscaling endpoint URL with escaped Key and Secret encoded."
+  argument: applicationautoscaling.url
+- comment: "The date (in the format YYYY-MM-DD) after which we use bigtable column keys."
+  argument: bigtable.column-key-from
+- comment: "gRPC client max receive message size (bytes). (default 104857600)"
+  argument: bigtable.grpc-max-recv-msg-size
+- comment: "gRPC client max send message size (bytes). (default 16777216)"
+  argument: bigtable.grpc-max-send-msg-size
+- comment: "Use compression when sending messages."
+  argument: bigtable.grpc-use-gzip-compression
+- comment: "Bigtable instance ID."
+  argument: bigtable.instance
+- comment: "Bigtable project ID."
+  argument: bigtable.project
+- comment: "Location of BoltDB index files."
+  argument: boltdb.dir
+- comment: "Comma-separated hostnames or ips of Cassandra instances."
+  argument: cassandra.addresses
+- comment: "Enable password authentication when connecting to cassandra."
+  argument: cassandra.auth
+- comment: "Path to certificate file to verify the peer."
+  argument: cassandra.ca-path
+- comment: "Consistency level for Cassandra. (default \"QUORUM\")"
+  argument: cassandra.consistency
+- comment: "Instruct the cassandra driver to not attempt to get host info from the system.peers table."
+  argument: cassandra.disable-initial-host-lookup
+- comment: "Require SSL certificate validation. (default true)"
+  argument: cassandra.host-verification
+- comment: "Keyspace to use in Cassandra."
+  argument: cassandra.keyspace
+- comment: "Password to use when connecting to cassandra."
+  argument: cassandra.password
+- comment: "Port that Cassandra is running on (default 9042)"
+  argument: cassandra.port
+- comment: "Replication factor to use in Cassandra. (default 1)"
+  argument: cassandra.replication-factor
+- comment: "Use SSL when connecting to cassandra instances."
+  argument: cassandra.ssl
+- comment: "Timeout when connecting to cassandra. (default 600ms)"
+  argument: cassandra.timeout
+- comment: "Username to use when connecting to cassandra."
+  argument: cassandra.username
+- comment: "Which storage client to use (aws, gcp, cassandra, inmemory). (default \"aws\")"
+  argument: chunk.storage-client
+- comment: "Schema config yaml"
+  argument: config-yaml
+- comment: "ACL Token used to interact with Consul."
+  argument: consul.acltoken
+- comment: "HTTP timeout when talking to consul (default 20s)"
+  argument: consul.client-timeout
+- comment: "Enable consistent reads to consul. (default true)"
+  argument: consul.consistent-reads
+- comment: "Hostname and port of Consul. (default \"localhost:8500\")"
+  argument: consul.hostname
+- comment: "Prefix for keys in Consul. (default \"collectors/\")"
+  argument: consul.prefix
+- comment: "The number of ingesters to write to and read from. (default 3)"
+  argument: distributor.replication-factor
+- comment: "DynamoDB table management requests per second limit. (default 2)"
+  argument: dynamodb.api-limit
+- comment: "The date (in the format YYYY-MM-DD) after which we will stop querying to non-base64 encoded values."
+  argument: dynamodb.base64-buckets-from
+- comment: "Enables on demand througput provisioning for the storage provider (if supported). Applies only to tables which are not autoscaled"
+  argument: dynamodb.chunk-table.enable-ondemand-throughput-mode
+- comment: "Date after which to write chunks to DynamoDB."
+  argument: dynamodb.chunk-table.from
+- comment: "Enables on demand througput provisioning for the storage provider (if supported). Applies only to tables which are not autoscaled"
+  argument: dynamodb.chunk-table.inactive-enable-ondemand-throughput-mode
+- comment: "DynamoDB table read throughput for inactive tables. (default 300)"
+  argument: dynamodb.chunk-table.inactive-read-throughput
+- comment: "Number of last inactive tables to enable read autoscale. (default 4)"
+  argument: dynamodb.chunk-table.inactive-read-throughput.scale-last-n
+- comment: "Should we enable autoscale for the table."
+  argument: dynamodb.chunk-table.inactive-read-throughput.scale.enabled
+- comment: "DynamoDB minimum seconds between each autoscale down. (default 1800)"
+  argument: dynamodb.chunk-table.inactive-read-throughput.scale.in-cooldown
+- comment: "DynamoDB maximum provision capacity. (default 6000)"
+  argument: dynamodb.chunk-table.inactive-read-throughput.scale.max-capacity
+- comment: "DynamoDB minimum provision capacity. (default 3000)"
+  argument: dynamodb.chunk-table.inactive-read-throughput.scale.min-capacity
+- comment: "DynamoDB minimum seconds between each autoscale up. (default 1800)"
+  argument: dynamodb.chunk-table.inactive-read-throughput.scale.out-cooldown
+- comment: "AWS AutoScaling role ARN"
+  argument: dynamodb.chunk-table.inactive-read-throughput.scale.role-arn
+- comment: "DynamoDB target ratio of consumed capacity to provisioned capacity. (default 80)"
+  argument: dynamodb.chunk-table.inactive-read-throughput.scale.target-value
+- comment: "DynamoDB table write throughput for inactive tables. (default 1)"
+  argument: dynamodb.chunk-table.inactive-write-throughput
+  self: true
+- comment: "Number of last inactive tables to enable write autoscale. (default 4)"
+  argument: dynamodb.chunk-table.inactive-write-throughput.scale-last-n
+- comment: "Should we enable autoscale for the table."
+  argument: dynamodb.chunk-table.inactive-write-throughput.scale.enabled
+- comment: "DynamoDB minimum seconds between each autoscale down. (default 1800)"
+  argument: dynamodb.chunk-table.inactive-write-throughput.scale.in-cooldown
+- comment: "DynamoDB maximum provision capacity. (default 6000)"
+  argument: dynamodb.chunk-table.inactive-write-throughput.scale.max-capacity
+- comment: "DynamoDB minimum provision capacity. (default 3000)"
+  argument: dynamodb.chunk-table.inactive-write-throughput.scale.min-capacity
+- comment: "DynamoDB minimum seconds between each autoscale up. (default 1800)"
+  argument: dynamodb.chunk-table.inactive-write-throughput.scale.out-cooldown
+- comment: "AWS AutoScaling role ARN"
+  argument: dynamodb.chunk-table.inactive-write-throughput.scale.role-arn
+- comment: "DynamoDB target ratio of consumed capacity to provisioned capacity. (default 80)"
+  argument: dynamodb.chunk-table.inactive-write-throughput.scale.target-value
+- comment: "DynamoDB table period. (default 168h0m0s)"
+  argument: dynamodb.chunk-table.period
+- comment: "DynamoDB table prefix for period tables. (default \"cortex_chunks_\")"
+  argument: dynamodb.chunk-table.prefix
+- comment: "DynamoDB table default read throughput. (default 300)"
+  argument: dynamodb.chunk-table.read-throughput
+- comment: "Should we enable autoscale for the table."
+  argument: dynamodb.chunk-table.read-throughput.scale.enabled
+- comment: "DynamoDB minimum seconds between each autoscale down. (default 1800)"
+  argument: dynamodb.chunk-table.read-throughput.scale.in-cooldown
+- comment: "DynamoDB maximum provision capacity. (default 6000)"
+  argument: dynamodb.chunk-table.read-throughput.scale.max-capacity
+- comment: "DynamoDB minimum provision capacity. (default 3000)"
+  argument: dynamodb.chunk-table.read-throughput.scale.min-capacity
+- comment: "DynamoDB minimum seconds between each autoscale up. (default 1800)"
+  argument: dynamodb.chunk-table.read-throughput.scale.out-cooldown
+- comment: "AWS AutoScaling role ARN"
+  argument: dynamodb.chunk-table.read-throughput.scale.role-arn
+- comment: "DynamoDB target ratio of consumed capacity to provisioned capacity. (default 80)"
+  argument: dynamodb.chunk-table.read-throughput.scale.target-value
+- comment: "Tag (of the form key=value) to be added to all tables under management."
+  argument: dynamodb.chunk-table.tag
+- comment: "DynamoDB table default write throughput. (default 3000)"
+  argument: dynamodb.chunk-table.write-throughput
+  self: true
+- comment: "Should we enable autoscale for the table."
+  argument: dynamodb.chunk-table.write-throughput.scale.enabled
+- comment: "DynamoDB minimum seconds between each autoscale down. (default 1800)"
+  argument: dynamodb.chunk-table.write-throughput.scale.in-cooldown
+- comment: "DynamoDB maximum provision capacity. (default 6000)"
+  argument: dynamodb.chunk-table.write-throughput.scale.max-capacity
+- comment: "DynamoDB minimum provision capacity. (default 3000)"
+  argument: dynamodb.chunk-table.write-throughput.scale.min-capacity
+- comment: "DynamoDB minimum seconds between each autoscale up. (default 1800)"
+  argument: dynamodb.chunk-table.write-throughput.scale.out-cooldown
+- comment: "AWS AutoScaling role ARN"
+  argument: dynamodb.chunk-table.write-throughput.scale.role-arn
+- comment: "DynamoDB target ratio of consumed capacity to provisioned capacity. (default 80)"
+  argument: dynamodb.chunk-table.write-throughput.scale.target-value
+- comment: "Number of chunks to group together to parallelise fetches (zero to disable) (default 10)"
+  argument: dynamodb.chunk.gang.size
+- comment: "Max number of chunk-get operations to start in parallel (default 32)"
+  argument: dynamodb.chunk.get.max.parallelism
+- comment: "The date (in the format YYYY-MM-DD) of the first day for which DynamoDB index buckets should be day-sized vs. hour-sized."
+  argument: dynamodb.daily-buckets-from
+- comment: "Maximum backoff time (default 50s)"
+  argument: dynamodb.max-backoff
+- comment: "Maximum number of times to retry an operation (default 20)"
+  argument: dynamodb.max-retries
+- comment: "Minimum backoff time (default 100ms)"
+  argument: dynamodb.min-backoff
+- comment: "The name of the DynamoDB table used before versioned schemas were introduced. (default \"cortex\")"
+  argument: dynamodb.original-table-name
+- comment: "Enables on demand througput provisioning for the storage provider (if supported). Applies only to tables which are not autoscaled"
+  argument: dynamodb.periodic-table.enable-ondemand-throughput-mode
+- comment: "Date after which to use periodic tables."
+  argument: dynamodb.periodic-table.from
+- comment: "DynamoDB periodic tables grace period (duration which table will be created/deleted before/after it's needed). (default 10m0s)"
+  argument: dynamodb.periodic-table.grace-period
+- comment: "Enables on demand througput provisioning for the storage provider (if supported). Applies only to tables which are not autoscaled"
+  argument: dynamodb.periodic-table.inactive-enable-ondemand-throughput-mode
+- comment: "DynamoDB table read throughput for inactive tables. (default 300)"
+  argument: dynamodb.periodic-table.inactive-read-throughput
+- comment: "Number of last inactive tables to enable read autoscale. (default 4)"
+  argument: dynamodb.periodic-table.inactive-read-throughput.scale-last-n
+- comment: "Should we enable autoscale for the table."
+  argument: dynamodb.periodic-table.inactive-read-throughput.scale.enabled
+- comment: "DynamoDB minimum seconds between each autoscale down. (default 1800)"
+  argument: dynamodb.periodic-table.inactive-read-throughput.scale.in-cooldown
+- comment: "DynamoDB maximum provision capacity. (default 6000)"
+  argument: dynamodb.periodic-table.inactive-read-throughput.scale.max-capacity
+- comment: "DynamoDB minimum provision capacity. (default 3000)"
+  argument: dynamodb.periodic-table.inactive-read-throughput.scale.min-capacity
+- comment: "DynamoDB minimum seconds between each autoscale up. (default 1800)"
+  argument: dynamodb.periodic-table.inactive-read-throughput.scale.out-cooldown
+- comment: "AWS AutoScaling role ARN"
+  argument: dynamodb.periodic-table.inactive-read-throughput.scale.role-arn
+- comment: "DynamoDB target ratio of consumed capacity to provisioned capacity. (default 80)"
+  argument: dynamodb.periodic-table.inactive-read-throughput.scale.target-value
+- comment: "DynamoDB table write throughput for inactive tables. (default 1)"
+  argument: dynamodb.periodic-table.inactive-write-throughput
+  self: true
+- comment: "Number of last inactive tables to enable write autoscale. (default 4)"
+  argument: dynamodb.periodic-table.inactive-write-throughput.scale-last-n
+- comment: "Should we enable autoscale for the table."
+  argument: dynamodb.periodic-table.inactive-write-throughput.scale.enabled
+- comment: "DynamoDB minimum seconds between each autoscale down. (default 1800)"
+  argument: dynamodb.periodic-table.inactive-write-throughput.scale.in-cooldown
+- comment: "DynamoDB maximum provision capacity. (default 6000)"
+  argument: dynamodb.periodic-table.inactive-write-throughput.scale.max-capacity
+- comment: "DynamoDB minimum provision capacity. (default 3000)"
+  argument: dynamodb.periodic-table.inactive-write-throughput.scale.min-capacity
+- comment: "DynamoDB minimum seconds between each autoscale up. (default 1800)"
+  argument: dynamodb.periodic-table.inactive-write-throughput.scale.out-cooldown
+- comment: "AWS AutoScaling role ARN"
+  argument: dynamodb.periodic-table.inactive-write-throughput.scale.role-arn
+- comment: "DynamoDB target ratio of consumed capacity to provisioned capacity. (default 80)"
+  argument: dynamodb.periodic-table.inactive-write-throughput.scale.target-value
+- comment: "DynamoDB table period. (default 168h0m0s)"
+  argument: dynamodb.periodic-table.period
+- comment: "DynamoDB table prefix for period tables. (default \"cortex_\")"
+  argument: dynamodb.periodic-table.prefix
+- comment: "DynamoDB table default read throughput. (default 300)"
+  argument: dynamodb.periodic-table.read-throughput
+- comment: "Should we enable autoscale for the table."
+  argument: dynamodb.periodic-table.read-throughput.scale.enabled
+- comment: "DynamoDB minimum seconds between each autoscale down. (default 1800)"
+  argument: dynamodb.periodic-table.read-throughput.scale.in-cooldown
+- comment: "DynamoDB maximum provision capacity. (default 6000)"
+  argument: dynamodb.periodic-table.read-throughput.scale.max-capacity
+- comment: "DynamoDB minimum provision capacity. (default 3000)"
+  argument: dynamodb.periodic-table.read-throughput.scale.min-capacity
+- comment: "DynamoDB minimum seconds between each autoscale up. (default 1800)"
+  argument: dynamodb.periodic-table.read-throughput.scale.out-cooldown
+- comment: "AWS AutoScaling role ARN"
+  argument: dynamodb.periodic-table.read-throughput.scale.role-arn
+- comment: "DynamoDB target ratio of consumed capacity to provisioned capacity. (default 80)"
+  argument: dynamodb.periodic-table.read-throughput.scale.target-value
+- comment: "Tag (of the form key=value) to be added to all tables under management."
+  argument: dynamodb.periodic-table.tag
+- comment: "DynamoDB table default write throughput. (default 3000)"
+  argument: dynamodb.periodic-table.write-throughput
+  self: true
+- comment: "Should we enable autoscale for the table."
+  argument: dynamodb.periodic-table.write-throughput.scale.enabled
+- comment: "DynamoDB minimum seconds between each autoscale down. (default 1800)"
+  argument: dynamodb.periodic-table.write-throughput.scale.in-cooldown
+- comment: "DynamoDB maximum provision capacity. (default 6000)"
+  argument: dynamodb.periodic-table.write-throughput.scale.max-capacity
+- comment: "DynamoDB minimum provision capacity. (default 3000)"
+  argument: dynamodb.periodic-table.write-throughput.scale.min-capacity
+- comment: "DynamoDB minimum seconds between each autoscale up. (default 1800)"
+  argument: dynamodb.periodic-table.write-throughput.scale.out-cooldown
+- comment: "AWS AutoScaling role ARN"
+  argument: dynamodb.periodic-table.write-throughput.scale.role-arn
+- comment: "DynamoDB target ratio of consumed capacity to provisioned capacity. (default 80)"
+  argument: dynamodb.periodic-table.write-throughput.scale.target-value
+- comment: "How frequently to poll DynamoDB to learn our capacity. (default 2m0s)"
+  argument: dynamodb.poll-interval
+- comment: "DynamoDB endpoint URL with escaped Key and Secret encoded. If only region is specified as a host, proper endpoint will be deduced. Use inmemory:///<table-name> to use a mock in-memory implementation."
+  argument: dynamodb.url
+- comment: "Should we use periodic tables."
+  argument: dynamodb.use-periodic-tables
+- comment: "The date (in the format YYYY-MM-DD) after which we enable v4 schema."
+  argument: dynamodb.v4-schema-from
+- comment: "The date (in the format YYYY-MM-DD) after which we enable v5 schema."
+  argument: dynamodb.v5-schema-from
+- comment: "The date (in the format YYYY-MM-DD) after which we enable v6 schema."
+  argument: dynamodb.v6-schema-from
+- comment: "The date (in the format YYYY-MM-DD) after which we enable v9 schema (Series indexing)."
+  argument: dynamodb.v9-schema-from
+- comment: "Name of GCS bucket to put chunks in."
+  argument: gcs.bucketname
+- comment: "if non-empty, httptest.NewServer serves on this address and blocks"
+  argument: httptest.serve
+- comment: "ID to register into consul. (default \"b3e9b7f8b3b7\")"
+  argument: ingester.ID
+- comment: "IP address to advertise in consul."
+  argument: ingester.addr
+- comment: "Range of time to subtract from MaxChunkAge to spread out flushes (default 20m0s)"
+  argument: ingester.chunk-age-jitter
+- comment: "Send chunks to PENDING ingesters on exit."
+  argument: ingester.claim-on-rollout
+- comment: "Number of concurrent goroutines flushing to dynamodb. (default 50)"
+  argument: ingester.concurrent-flushes
+- comment: "Timeout for individual flush operations. (default 1m0s)"
+  argument: ingester.flush-op-timeout
+- comment: "Period with which to attempt to flush chunks. (default 1m0s)"
+  argument: ingester.flush-period
+- comment: "Period at which to heartbeat to consul. (default 5s)"
+  argument: ingester.heartbeat-period
+- comment: "Name of network interface to read address from. (default [eth0 en0])"
+  argument: ingester.interface
+- comment: "Period to wait for a claim from another ingester; will join automatically after this."
+  argument: ingester.join-after
+- comment: "Maximum chunk age before flushing. (default 12h0m0s)"
+  argument: ingester.max-chunk-age
+- comment: "Maximum chunk idle time before flushing. (default 5m0s)"
+  argument: ingester.max-chunk-idle
+- comment: "Minimum duration to wait before becoming ready. This is to work around race conditions with ingesters exiting and updating the ring. (default 1m0s)"
+  argument: ingester.min-ready-duration
+- comment: "Store tokens in a normalised fashion to reduce allocations."
+  argument: ingester.normalise-tokens
+- comment: "Number of tokens for each ingester. (default 128)"
+  argument: ingester.num-tokens
+- comment: "port to advertise in consul (defaults to server.grpc-listen-port)."
+  argument: ingester.port
+- comment: "Period with which to update the per-user ingestion rates. (default 15s)"
+  argument: ingester.rate-update-period
+- comment: "Period chunks will remain in memory after flushing. (default 5m0s)"
+  argument: ingester.retain-period
+- comment: "Time to spend searching for a pending ingester when shutting down. (default 30s)"
+  argument: ingester.search-pending-for
+- comment: "Directory to store chunks in."
+  argument: local.chunk-directory
+- comment: "Only log messages with the given severity or above. Valid levels: [debug, info, warn, error] (default info)"
+  argument: log.level
+- comment: "query to fetch error rates per table (default \"sum(rate(cortex_dynamo_failures_total{error=\"ProvisionedThroughputExceededException\",operation=~\".*Write.*\"}[1m])) by (table) > 0\")"
+  argument: metrics.error-rate-query
+- comment: "query to fetch ingester queue length (default \"sum(avg_over_time(cortex_ingester_flush_queue_length{job=\"cortex/ingester\"}[2m]))\")"
+  argument: metrics.queue-length-query
+- comment: "query to fetch read errors per table (default \"sum(increase(cortex_dynamo_failures_total{operation=\"DynamoDB.QueryPages\",error=\"ProvisionedThroughputExceededException\"}[1m])) by (table) > 0\")"
+  argument: metrics.read-error-query
+- comment: "query to fetch read capacity usage per table (default \"sum(rate(cortex_dynamo_consumed_capacity_total{operation=\"DynamoDB.QueryPages\"}[1h])) by (table) > 0\")"
+  argument: metrics.read-usage-query
+- comment: "Scale up capacity by this multiple (default 1.3)"
+  argument: metrics.scale-up-factor
+- comment: "Queue length above which we will scale up capacity (default 100000)"
+  argument: metrics.target-queue-length
+- comment: "Use metrics-based autoscaling, via this query URL"
+  argument: metrics.url
+- comment: "query to fetch write capacity usage per table (default \"sum(rate(cortex_dynamo_consumed_capacity_total{operation=\"DynamoDB.BatchWriteItem\"}[15m])) by (table) > 0\")"
+  argument: metrics.usage-query
+- comment: "The heartbeat timeout after which ingesters are skipped for reads/writes. (default 1m0s)"
+  argument: ring.heartbeat-timeout
+- comment: "Backend storage to use for the ring (consul, inmemory). (default \"consul\")"
+  argument: ring.store
+- comment: "S3 endpoint URL with escaped Key and Secret encoded. If only region is specified as a host, proper endpoint will be deduced. Use inmemory:///<bucket-name> to use a mock in-memory implementation."
+  argument: s3.url
+- comment: "Timeout for graceful shutdowns (default 30s)"
+  argument: server.graceful-shutdown-timeout
+- comment: "gRPC server listen port. (default 9095)"
+  argument: server.grpc-listen-port
+- comment: "Idle timeout for HTTP server (default 2m0s)"
+  argument: server.http-idle-timeout
+- comment: "HTTP server listen port. (default 80)"
+  argument: server.http-listen-port
+- comment: "Read timeout for HTTP server (default 30s)"
+  argument: server.http-read-timeout
+- comment: "Write timeout for HTTP server (default 30s)"
+  argument: server.http-write-timeout
+- comment: "Register the intrumentation handlers (/metrics etc). (default true)"
+  argument: server.register-instrumentation
+- comment: "Cache config for index entry reading. Enable on-disk cache."
+  argument: store.index-cache-read.cache.enable-diskcache
+- comment: "Cache config for index entry reading. Enable in-memory cache."
+  argument: store.index-cache-read.cache.enable-fifocache
+- comment: "Cache config for index entry reading. The default validity of entries for caches unless overridden."
+  argument: store.index-cache-read.default-validity
+- comment: "Cache config for index entry reading. Path to file used to cache chunks. (default \"/var/run/chunks\")"
+  argument: store.index-cache-read.diskcache.path
+- comment: "Cache config for index entry reading. Size of file (bytes) (default 1073741824)"
+  argument: store.index-cache-read.diskcache.size
+- comment: "Cache config for index entry reading. The expiry duration for the cache."
+  argument: store.index-cache-read.fifocache.duration
+- comment: "Cache config for index entry reading. The number of entries to cache."
+  argument: store.index-cache-read.fifocache.size
+- comment: "Cache config for index entry reading. How many chunks to buffer for background write back. (default 10000)"
+  argument: store.index-cache-read.memcache.write-back-buffer
+- comment: "Cache config for index entry reading. How many goroutines to use to write back to memcache. (default 10)"
+  argument: store.index-cache-read.memcache.write-back-goroutines
+- comment: "Cache config for index entry reading. How many keys to fetch in each batch."
+  argument: store.index-cache-read.memcached.batchsize
+- comment: "Cache config for index entry reading. How long keys stay in the memcache."
+  argument: store.index-cache-read.memcached.expiration
+- comment: "Cache config for index entry reading. Hostname for memcached service to use when caching chunks. If empty, no memcached will be used."
+  argument: store.index-cache-read.memcached.hostname
+- comment: "Cache config for index entry reading. Maximum number of idle connections in pool. (default 16)"
+  argument: store.index-cache-read.memcached.max-idle-conns
+- comment: "Cache config for index entry reading. Maximum active requests to memcache. (default 100)"
+  argument: store.index-cache-read.memcached.parallelism
+- comment: "Cache config for index entry reading. SRV service used to discover memcache servers. (default \"memcached\")"
+  argument: store.index-cache-read.memcached.service
+- comment: "Cache config for index entry reading. Maximum time to wait before giving up on memcached requests. (default 100ms)"
+  argument: store.index-cache-read.memcached.timeout
+- comment: "Cache config for index entry reading. Period with which to poll DNS for memcache servers. (default 1m0s)"
+  argument: store.index-cache-read.memcached.update-interval
+- comment: "Cache validity for active index entries. Should be no higher than -ingester.max-chunk-idle. (default 5m0s)"
+  argument: store.index-cache-validity
+- comment: "If true, enables retention deletes of DB tables"
+  argument: table-manager.retention-deletes-enabled
+- comment: "Tables older than this retention period are deleted. Note: This setting is destructive to data!(default: 0, which disables deletion)"
+  argument: table-manager.retention-period
+- comment: "If true, disable all changes to DB capacity"
+  argument: table-manager.throughput-updates-disabled

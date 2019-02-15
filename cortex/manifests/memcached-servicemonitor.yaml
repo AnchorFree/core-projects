@@ -1,0 +1,54 @@
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: memcached-chunk
+  labels:
+    app: memcached
+    release: prometheus-operator
+spec:
+  endpoints:
+  - port: metrics
+  namespaceSelector:
+    matchNames:
+    - cortex
+  selector:
+    matchLabels:
+      app: memcached-chunk
+      release: memcached-chunk
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: memcached-read
+  labels:
+    app: memcached-read
+    release: prometheus-operator
+spec:
+  endpoints:
+  - port: metrics
+  namespaceSelector:
+    matchNames:
+    - cortex
+  selector:
+    matchLabels:
+      app: memcached-read
+      release: memcached-read
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: memcached-write
+  labels:
+    app: memcached-write
+    release: prometheus-operator
+spec:
+  endpoints:
+  - port: metrics
+  namespaceSelector:
+    matchNames:
+    - cortex
+  selector:
+    matchLabels:
+      app: memcached-write
+      release: memcached-write

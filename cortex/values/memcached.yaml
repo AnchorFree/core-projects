@@ -1,0 +1,11 @@
+metrics:
+  enabled: true
+replicaCount: 9
+memcached:
+  verbosity: vvv
+  maxItemMemory: 128
+resources:
+  requests:
+    memory: 64Mi
+    cpu: 500m
+AntiAffinity: "soft"
