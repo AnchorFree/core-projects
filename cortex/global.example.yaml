@@ -1,0 +1,29 @@
+---
+# AWS Region to create cluster
+aws_region: us-east-1
+
+# Name of K8S cluster
+cluster_name: cortex-example
+
+# list with ssh keys to add to instances
+ssh_keys: []
+
+# Set of parameters for remote terraform states
+terraform_state_bucket: example-terraform-state
+terraform_state_core_key: core-infra.tfstate
+terraform_state_cortex_key: cortex-example.tfstate
+terraform_state_lock_table: example-terraform-state-lock
+
+# S3 bucket and DynamoDB table name
+cortex_s3_bucket: cortex-example
+cortex_dynamodb_table: cortex-example
+
+# Cortex Postregs DB parameters
+pg_db_name: cortex-example
+pg_db_user: cortex-example
+pg_db_pass: cortex-example
+
+# DNS Settings for public endpoints
+cortex_external_dns: cortex.example.com.
+grafana_external_dns: grafana.example.com.
+external_dns_domain: example.com

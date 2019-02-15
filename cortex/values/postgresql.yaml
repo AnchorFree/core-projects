@@ -1,0 +1,5 @@
+postgresqlUsername: cortex
+postgresqlPassword: cortex
+postgresqlDatabase: cortex
+metrics:
+  enabled: true

@@ -1,0 +1,54 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  labels:
+    app: jaeger
+    chart: jaeger-0.8.2
+    component: cassandra-schema
+    heritage: Tiller
+    jaeger-infra: cassandra-schema-job
+    release: jaegertracing
+  name: jaegertracing-cassandra-schema
+  namespace: cortex
+spec:
+  activeDeadlineSeconds: 120
+  backoffLimit: 6
+  completions: 1
+  parallelism: 1
+  template:
+    spec:
+      containers:
+      - env:
+        - name: CQLSH_HOST
+          valueFrom:
+            configMapKeyRef:
+              key: cassandra.servers
+              name: jaegertracing
+        - name: MODE
+          valueFrom:
+            configMapKeyRef:
+              key: cassandra.schema.mode
+              name: jaegertracing
+        - name: DATACENTER
+          valueFrom:
+            configMapKeyRef:
+              key: cassandra.datacenter.name
+              name: jaegertracing
+        - name: CASSANDRA_PORT
+          valueFrom:
+            configMapKeyRef:
+              key: cassandra.port
+              name: jaegertracing
+        - name: CASSANDRA_WAIT_TIMEOUT
+          value: "300"
+        image: jaegertracing/jaeger-cassandra-schema:1.8.2
+        imagePullPolicy: IfNotPresent
+        name: jaegertracing-cassandra-schema
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: OnFailure
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
